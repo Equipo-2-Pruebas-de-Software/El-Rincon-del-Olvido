@@ -1,0 +1,33 @@
+.filters button {
+    margin: 0 5px;
+  }
+  
+  .filters button:focus {
+    outline: none;
+  }
+  
+  .filters .btn {
+    margin-bottom: 10px;
+  }
+  .range-slider {
+    position: relative;
+    width: 100%;
+  }
+  
+  .range-slider input[type="range"] {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+  
+  .range-slider input[type="range"]:nth-child(1) {
+    pointer-events: all;
+    z-index: 2;
+  }
+  
+  .range-slider input[type="range"]:nth-child(2) {
+    pointer-events: all;
+    z-index: 1;
+  }
+  

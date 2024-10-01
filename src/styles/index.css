@@ -1,0 +1,137 @@
+.navbar {
+  background-color: #0a0a0a; /* Fondo negro oscuro */
+  color: #00FFFF; /* Texto en cian neón */
+}
+
+.navbar-brand {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  color: #FF00FF; /* Logo en rosa neón */
+}
+
+.nav-link {
+  font-family: 'Orbitron', sans-serif;
+  color: #00FFFF; /* Texto de navegación en cian neón */
+}
+
+.nav-link:hover {
+  color: #39FF14; /* Efecto hover en verde neón */
+}
+
+.navbar-toggler {
+  border-color: #00FFFF; /* Botón de menú en cian neón */
+}
+.card {
+  background: linear-gradient(135deg, #f0f0f0, #d4d4d4); /* Fondo claro con un leve degradado */
+  color: #000000; /* Texto negro para contraste con el fondo claro */
+  border: none; /* Eliminar borde para un diseño más limpio */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+  
+}
+
+.card-title {
+  color: #1a1a1a; /* Título más oscuro para contraste */
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif; /* Fuente futurista */
+}
+
+.card-subtitle {
+  color: #555555; /* Subtítulo en gris claro */
+  font-family: 'Orbitron', sans-serif; /* Fuente más suave y legible */
+}
+
+.card-text .price {
+  color: #FF00FF; /* Precio en rosa neón */
+  font-family: 'Roboto', sans-serif; /* Cambiar a Roboto o heredar la fuente normal */
+}
+
+.badge-custom {
+  background-color: #ff00ff; /* Color neón para el descuento */
+  color: white; /* Texto blanco dentro de la badge */
+  font-family: 'Roboto', sans-serif; /* Mantener Orbitron para el descuento */
+}
+
+.card-text {
+  color: #333333; /* Texto del cuerpo con color más oscuro */
+  font-family: 'Roboto', sans-serif; /* Fuente complementaria para el cuerpo del texto */
+}
+
+.card-footer {
+  background-color: #f7f7f7; /* Fondo claro en el footer */
+  border-top: 1px solid #e0e0e0; /* Línea sutil entre el body y el footer */
+  font-family: 'Roboto', sans-serif; /* Fuente más legible para el footer */
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño para el footer */
+  color: #333333; /* Color oscuro para el texto */
+  
+}
+
+.card-footer small {
+  font-family: 'Roboto', sans-serif; /* Asegurarse de que small use Roboto */
+  font-size: 0.875rem; /* Tamaño pequeño */
+}
+
+.card-footer del {
+  color: #555555; /* Color gris más claro para el precio original */
+  font-family: 'Roboto', sans-serif; /* Aplicar Roboto también a del */
+}
+
+
+.btn-primary {
+  background-color: #39FF14; /* Fondo verde neón */
+  border-color: #39FF14;
+}
+
+.btn-primary:hover {
+  background-color: #00D4FF; /* Hover en azul eléctrico */
+  border-color: #00D4FF;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+h1, h2, h3, h4 {
+  font-family: 'Orbitron', sans-serif;
+}
+footer {
+  background-color: #1A1A1A;
+  padding: 20px 0;
+  color: #B0B0B0;
+}
+
+footer h5 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00FFFF;
+}
+
+footer a {
+  color: #FF00FF;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer p {
+  margin: 0;
+  color: #B0B0B0;
+}
+
+footer .social-icons a {
+  color: #FF00FF;
+  margin-right: 15px;
+}
+
+footer .social-icons a:hover {
+  color: #00FFFF;
+}
+.filters button {
+  margin: 0 5px;
+}
+
+.filters button:focus {
+  outline: none;
+}
+
+.filters .btn {
+  margin-bottom: 10px;
+}
