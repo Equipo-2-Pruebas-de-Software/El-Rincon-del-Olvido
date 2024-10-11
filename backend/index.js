@@ -5,6 +5,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.use('/api', authRoutes); // Usar rutas de autenticación
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
