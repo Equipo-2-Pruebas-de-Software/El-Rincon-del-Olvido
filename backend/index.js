@@ -9,14 +9,14 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
 
 // Cargar las rutas
-const authRoutes = require('./routes/auth'); // Descomentar autenticación
-const products_rute = require('./routes/products.routes');
+const authRoutes = require('./routes/auth.routes'); // Descomentar autenticación
+const productsRoutes = require('./routes/products.routes');
 const cartRoutes = require('./routes/cart.routes'); // Nueva ruta para el carrito
 
 // Usar las rutas
 app.use('/api/auth', authRoutes); // Usar rutas de autenticación
-app.use('/api/products', products_rute);
-app.use('/api', cartRoutes); // Añadir la ruta del carrito
+app.use('/api/products', productsRoutes);
+app.use('/api/cart', cartRoutes); // Añadir la ruta del carrito
 
 // Conexión a la base de datos
 mongoose.connect(process.env.MONGODB_SERVER, {
