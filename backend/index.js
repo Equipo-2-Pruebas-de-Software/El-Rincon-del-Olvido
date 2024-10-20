@@ -19,10 +19,11 @@ app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes); // Añadir la ruta del carrito
 
 // Conexión a la base de datos
-mongoose.connect(process.env.MONGODB_SERVER, {
+/* {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
+} */
+mongoose.connect(process.env.MONGODB_SERVER)
   .then(() => {
     console.log('MongoDB connected');
   })
