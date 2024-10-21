@@ -23,7 +23,6 @@ const AuthPage = () => {
         // Iniciar sesión
         const response = await axios.post('/api/login', { email, password });
 
-        console.log(response.data);    // eliminar?
 
         localStorage.setItem('user', JSON.stringify(response.data.user));
         navigate('/home'); 
@@ -32,7 +31,6 @@ const AuthPage = () => {
         const response = await axios.post('/api/register', { name, email, password });
         localStorage.setItem('user', JSON.stringify(response.data.user)); // NUEVO
         navigate('/home'); // NUEVO
-        console.log(response.data);
       }
     } catch (error) {
       // Mostrar mensaje de error si el nombre de usuario ya existe
