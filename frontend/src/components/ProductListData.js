@@ -11,102 +11,102 @@ import chaqueta1 from '../assets/ropa/chaqueta1.webp';
 const productos = [
   {
     id: 1,
-    nombre: 'Estampado Neon',
-    descripcion: 'Polera Hombre',
-    categoria: 'men', // Categoría asignada
-    precio: 990, // Precio como número
-    descuento: '92.9%',
-    precioOriginal: 13990, // Precio original como número
-    imagen: polera1,
-    tallas: ['S', 'M', 'L', 'XL'], // Tallas disponibles
+    name: 'Estampado Neon',
+    description: 'Polera Hombre',
+    category: 'men', // Categoría asignada
+    price: 990, // Precio como número
+    discount: 0.929, // Descuento como número decimal
+    originalPrice: 13990, // Precio original como número
+    image: polera1,
+    availableSizes: ['S', 'M', 'L', 'XL'], // Tallas disponibles
   },
   {
     id: 2,
-    nombre: 'Splatoon Neon',
-    descripcion: 'Polera Hombre',
-    categoria: 'men',
-    precio: 14990,
-    descuento: '25%',
-    precioOriginal: 20000,
-    imagen: polera2,
-    tallas: ['M', 'L', 'XL', 'XXL'], // Tallas disponibles
+    name: 'Splatoon Neon',
+    description: 'Polera Hombre',
+    category: 'men',
+    price: 14990,
+    discount: 0.25, // Descuento como número decimal
+    originalPrice: 20000,
+    image: polera2,
+    availableSizes: ['M', 'L', 'XL', 'XXL'], // Tallas disponibles
   },
   {
     id: 3,
-    nombre: 'Dua Lipa Neon',
-    descripcion: 'Polera Mujer',
-    categoria: 'women',
-    precio: 11719,
-    descuento: '17.8%',
-    precioOriginal: 14249,
-    imagen: polera3,
-    tallas: ['S', 'M', 'L'], // Tallas disponibles
+    name: 'Dua Lipa Neon',
+    description: 'Polera Mujer',
+    category: 'women',
+    price: 11719,
+    discount: 0.178, // Descuento como número decimal
+    originalPrice: 14249,
+    image: polera3,
+    availableSizes: ['S', 'M', 'L'], // Tallas disponibles
   },
   {
     id: 4,
-    nombre: 'Skull Neon',
-    descripcion: 'Polera Hombre',
-    categoria: 'men',
-    precio: 14990,
-    descuento: '25%',
-    precioOriginal: 20000,
-    imagen: polera4,
-    tallas: ['M', 'L', 'XL'], // Tallas disponibles
+    name: 'Skull Neon',
+    description: 'Polera Hombre',
+    category: 'men',
+    price: 14990,
+    discount: 0.25, // Descuento como número decimal
+    originalPrice: 20000,
+    image: polera4,
+    availableSizes: ['M', 'L', 'XL'], // Tallas disponibles
   },
   {
     id: 5,
-    nombre: 'Daft Punk',
-    descripcion: 'Polera Mujer',
-    categoria: 'women',
-    precio: 14990,
-    descuento: '25%',
-    precioOriginal: 20000,
-    imagen: polera5,
-    tallas: ['S', 'M', 'L', 'XL'], // Tallas disponibles
+    name: 'Daft Punk',
+    description: 'Polera Mujer',
+    category: 'women',
+    price: 14990,
+    discount: 0.25, // Descuento como número decimal
+    originalPrice: 20000,
+    image: polera5,
+    availableSizes: ['S', 'M', 'L', 'XL'], // Tallas disponibles
   },
   {
     id: 6,
-    nombre: 'Simbolo Neon',
-    descripcion: 'Polera Mujer',
-    categoria: 'women',
-    precio: 11719,
-    descuento: '17.8%',
-    precioOriginal: 14249,
-    imagen: polera6,
-    tallas: ['S', 'M'], // Tallas disponibles
+    name: 'Simbolo Neon',
+    description: 'Polera Mujer',
+    category: 'women',
+    price: 11719,
+    discount: 0.178, // Descuento como número decimal
+    originalPrice: 14249,
+    image: polera6,
+    availableSizes: ['S', 'M'], // Tallas disponibles
   },
   {
     id: 7,
-    nombre: 'Splatoon Neon',
-    descripcion: 'Polera Mujer',
-    categoria: 'women',
-    precio: 14990,
-    descuento: '25%',
-    precioOriginal: 20000,
-    imagen: polera7,
-    tallas: ['M', 'L', 'XL'], // Tallas disponibles
+    name: 'Splatoon Neon',
+    description: 'Polera Mujer',
+    category: 'women',
+    price: 14990,
+    discount: 0.25, // Descuento como número decimal
+    originalPrice: 20000,
+    image: polera7,
+    availableSizes: ['M', 'L', 'XL'], // Tallas disponibles
   },
   {
     id: 8,
-    nombre: 'Kraken Neon',
-    descripcion: 'Polera Hombre',
-    categoria: 'men',
-    precio: 14990,
-    descuento: '25%',
-    precioOriginal: 20000,
-    imagen: polera8,
-    tallas: ['M', 'L', 'XL', 'XXL'], // Tallas disponibles
+    name: 'Kraken Neon',
+    description: 'Polera Hombre',
+    category: 'men',
+    price: 14990,
+    discount: 0.25, // Descuento como número decimal
+    originalPrice: 20000,
+    image: polera8,
+    availableSizes: ['M', 'L', 'XL', 'XXL'], // Tallas disponibles
   },
   {
     id: 9,
-    nombre: 'Chaqueta Cyberpunk',
-    descripcion: 'Chaqueta Hombre',
-    categoria: 'men',
-    precio: 25385,
-    descuento: '12%',
-    precioOriginal: 29103,
-    imagen: chaqueta1,
-    tallas: ['M', 'L', 'XL', 'XXL'], // Tallas disponibles
+    name: 'Chaqueta Cyberpunk',
+    description: 'Chaqueta Hombre',
+    category: 'men',
+    price: 25385,
+    discount: 0.12, // Descuento como número decimal
+    originalPrice: 29103,
+    image: chaqueta1,
+    availableSizes: ['M', 'L', 'XL', 'XXL'], // Tallas disponibles
   },
 ];
 
