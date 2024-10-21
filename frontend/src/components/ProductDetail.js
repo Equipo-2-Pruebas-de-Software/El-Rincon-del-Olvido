@@ -42,7 +42,7 @@ const ProductDetail = () => {
           <h2>{producto.name}</h2>
           <h4 className="text-muted">{producto.description}</h4>
           <p className="mt-3"><strong>Precio:</strong> ${producto.price.toLocaleString('es-ES')}</p>
-          <p><strong>Descuento:</strong> {producto.discount}%</p>
+          <p><strong>Descuento:</strong> {(producto.discount * 100).toFixed(0)}%</p>
           <p><strong>Precio Original:</strong> <del>${producto.originalPrice.toLocaleString('es-ES')}</del></p>
 
           {/* Sección para mostrar las tallas disponibles */}
