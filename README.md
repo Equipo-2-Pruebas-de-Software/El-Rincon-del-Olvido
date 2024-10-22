@@ -51,68 +51,115 @@ El suite de casos de prueba es el siguiente:
 **Procedimiento** 
 
   -Click en login
+  
   -Ingresar correo
+  
   -Ingresar contraseña
+  
   -Click en ingresar
   
 **3**
+
 **Nombre** Listar productos
+
 **Descripción** El usuario puede ver y navegar por una lista de productos
+
 **Procedimiento** 
 
-# 4
+**4**
+
 **Nombre** Buscar producto
+
 **Descripción** El usuario puede buscar un producto por categorías
+
 **Procedimiento** 
+
   -Buscar prenda por tipo de prenda
+  
   -Buscar prenda por tamaño
+  
   -Buscar prenda por color
   
-# 5
+**5**
+
 **Nombre** Mostrar detalles del producto
+
 **Descripción** El usuario puede ver los detalles del producto
+
 **Procedimiento** 
+
   -Clickear en producto desde el menú
+  
   -Ver representaciones de alta resolución
+  
   -Ver descripciones
+  
   -Ver precios
   
-# 6
+**6**
+
 **Nombre** Comprar producto
+
 **Descripción** El usuario puede comprar un producto
+
 **Procedimiento** 
+
   -Click en carro
+  
   -Agregar producto al carro
+  
   -Revisar selección
+  
   -Completar transacción
   
-# 7
+**7**
+
 **Nombre** Agregar producto
+
 **Descripción** El administrador puede agregar un producto
+
 **Procedimiento**
+
   -Click en admin
+  
   -Añadir producto
   
-# 8
+**8**
+
 **Nombre** Editar producto
+
 **Descripción** El administrador puede editar un producto
+
 **Procedimiento**
+
   -Click en admin
+  
   -Editar producto
   
-# 9
+**9**
+
 **Nombre** Eliminar producto
+
 **Descripción** El administrador puede eliminar un producto
+
 **Procedimiento**
+
   -Click en admin
+  
   -Eliminar producto
   
-# 10
+**10**
+
 **Nombre** Generar informe
+
 **Descripción** El administrador puede generar un informe
+
 **Procedimiento**
+
   -Click en admin
+  
   -Click en generar informe
+  
   -Ver informe
 
 ## 4. Problemas y Soluciones
