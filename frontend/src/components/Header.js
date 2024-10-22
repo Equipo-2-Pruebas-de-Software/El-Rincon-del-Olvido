@@ -1,12 +1,13 @@
 // src/components/Header.js
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import UserContext from '../context/UserContext';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { userName, logoutUser } = useContext(UserContext);
+  const { userName, userAdmin, logoutUser } = useContext(UserContext);
+  
   const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
@@ -83,11 +84,22 @@ const Header = () => {
                   <li><button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button></li>
                 </ul>
               </li>
-            ) : (
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">Iniciar sesión</Link>
-              </li>
-            )}
+              ) : (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Iniciar sesión</Link>
+                </li>
+              )
+            }
+
+            {
+              userAdmin
+                ?(
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/admin/dashboard">Ir a panel de admin</Link>
+                  </li>
+                )
+              :(<></>)
+            }
           </ul>
         </div>
       </div>

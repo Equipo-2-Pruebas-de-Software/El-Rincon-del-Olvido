@@ -1,5 +1,6 @@
 const Cart = require('../models/cart');
 const Product = require('../models/products');
+const History = require('../models/history');
 
 // Agregar productos al carrito
 exports.addToCart = async (req, res) => {
@@ -73,6 +74,15 @@ exports.checkout = async (req, res) => {
     }
 
     // Aquí podrías implementar la lógica de pago o transacción
+
+    //Añadir compra a historial
+    const cur_date = new Date().now().toString();
+
+    cart.items.map(async (item) => {
+      let history = new History({ nameProduct: item.product, userBuyer: cart.user, datePurchase: cur_date, quantityProduct: item.quantity });
+      await history.save();
+    });
+
     cart.items = [];  // Vaciar el carrito
     await cart.save();
 
