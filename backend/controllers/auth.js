@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
 
     // Hashear la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword });
+    const newUser = new User({ name, email, password: hashedPassword, isAdmin: false });
     await newUser.save();
 
     // Generar token JWT

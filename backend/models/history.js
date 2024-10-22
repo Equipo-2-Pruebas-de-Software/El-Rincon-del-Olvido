@@ -4,18 +4,20 @@ const Schema = mongoose.Schema;
 
 const History = new Schema({
     nameProduct: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Product',
         required: true
     },
     userBuyer: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     datePurchase: {
         type: String,
         required: true
     },
-    price: {
+    quantityProduct: {
         type: Number,
         required: true
     },

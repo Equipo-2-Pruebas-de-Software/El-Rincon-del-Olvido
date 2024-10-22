@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Cambiamos useHistory por useNavigate
 import logo from '../assets/logo.png';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState(''); // Estado para manejar la búsqueda
+  const [user, setUser] = useState({});
+  
   const navigate = useNavigate(); // Hook para redirigir
 
   const handleSearchChange = (e) => {
@@ -17,6 +19,14 @@ const Header = () => {
       navigate(`/productos?search=${searchQuery}`);
     }
   };
+
+  useEffect(() => {
+    try {
+      setUser(JSON.parse(localStorage.getItem('user')));
+    } catch (err) {
+      setUser('');
+    }
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -65,9 +75,28 @@ const Header = () => {
                 <i className="fas fa-shopping-cart"></i> Carrito
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Iniciar sesión</Link>
-            </li>
+            {
+              user
+                ?(
+                  <>
+                    <h4>{user.name}</h4>
+                    {
+                      user.isAdmin
+                        ?(
+                          <li className="nav-item">
+                            <Link className="nav-link" to="/admin/dashboard">Ir a panel de admin</Link>
+                          </li>
+                        )
+                      :(<></>)
+                    }
+                  </>
+                )
+              :(
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">Iniciar sesión</Link>
+                  </li>
+                )
+            }
           </ul>
         </div>
       </div>
