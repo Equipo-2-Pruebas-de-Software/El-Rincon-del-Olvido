@@ -24,26 +24,38 @@ Estas pruebas buscan abarcar los requisitos mínimos de la página.
 El suite de casos de prueba es el siguiente:
 
 
-# 1
+**1**
+
 **Nombre** Registrar cuenta
+
 **Descripción** El usuario puede crear y registrar una cuenta
+
 **Procedimiento** 
+
   -Click en registrar
+  
   -Ingresar correo
+  
   -Ingresar nombre de user
+  
   -Ingresar contraseña
+  
   -Click en guardar
   
-# 2
+**2**
+
 **Nombre** Login de cuenta
+
 **Descripción** El usuario puede ingresar a la página usando su cuenta
+
 **Procedimiento** 
+
   -Click en login
   -Ingresar correo
   -Ingresar contraseña
   -Click en ingresar
   
-# 3
+**3**
 **Nombre** Listar productos
 **Descripción** El usuario puede ver y navegar por una lista de productos
 **Procedimiento** 
