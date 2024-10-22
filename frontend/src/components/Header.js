@@ -6,8 +6,7 @@ import UserContext from '../context/UserContext';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { userName, logoutUser } = useContext(UserContext);
-  const [user, setUser] = useState({});
+  const { userName, userAdmin, logoutUser } = useContext(UserContext);
   
   const navigate = useNavigate();
 
@@ -85,29 +84,21 @@ const Header = () => {
                   <li><button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button></li>
                 </ul>
               </li>
-            ) : (
-              {
-              user
+              ) : (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Iniciar sesión</Link>
+                </li>
+              )
+            }
+
+            {
+              userAdmin
                 ?(
-                  <>
-                    <h4>{user.name}</h4>
-                    {
-                      user.isAdmin
-                        ?(
-                          <li className="nav-item">
-                            <Link className="nav-link" to="/admin/dashboard">Ir a panel de admin</Link>
-                          </li>
-                        )
-                      :(<></>)
-                    }
-                  </>
-                )
-              :(
                   <li className="nav-item">
-                      <Link className="nav-link" to="/login">Iniciar sesión</Link>
-                    </li>
-            )}
+                    <Link className="nav-link" to="/admin/dashboard">Ir a panel de admin</Link>
+                  </li>
                 )
+              :(<></>)
             }
           </ul>
         </div>
