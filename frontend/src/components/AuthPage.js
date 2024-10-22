@@ -21,16 +21,16 @@ const AuthPage = () => {
     try {
       if (isLogin) {
         // Iniciar sesión
-        const response = await axios.post('/api/login', { email, password });
+        const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
 
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate('/home'); 
+        navigate('/'); 
       } else {
         // Registro
-        const response = await axios.post('/api/register', { name, email, password });
+        const response = await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
         localStorage.setItem('user', JSON.stringify(response.data.user)); // NUEVO
-        navigate('/home'); // NUEVO
+        navigate('/'); // NUEVO
       }
     } catch (error) {
       // Mostrar mensaje de error si el nombre de usuario ya existe
