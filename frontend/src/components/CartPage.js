@@ -11,7 +11,7 @@ const CartPage = () => {
   const fetchCartItems = async () => {
     const token = localStorage.getItem('token');  // Obtener el token de autenticación
     try {
-      const response = await axios.get('/api/cart', {
+      const response = await axios.get('http://localhost:5000/api/cart/cart', {
         headers: {
           Authorization: `Bearer ${token}`  // Enviar el token en el encabezado Authorization
         }
@@ -33,7 +33,7 @@ const CartPage = () => {
   const updateQuantity = async (id, cantidad) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`/api/cart/update-quantity/${id}`, { cantidad }, {
+      await axios.post(`http://localhost:5000/api/cart/update-quantity/${id}`, { cantidad }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -53,7 +53,7 @@ const CartPage = () => {
   const removeItem = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`/api/cart/remove-item/${id}`, {
+      await axios.delete(`http://localhost:5000/api/cart/remove-item/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
