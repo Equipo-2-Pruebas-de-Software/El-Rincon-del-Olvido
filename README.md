@@ -17,7 +17,93 @@ Infraestructura:
 - Axios (solicitudes HTTP)
 - JWT + bcrypt (autenticación y seguridad)
 
-## 2. Problemas y Soluciones
+## 3. Pruebas
+# Estrategia de Pruebas
+Se diseña un suite de casos de prueba, el cuál luego prueba de forma automática en la página usando Cypress.io.
+Estas pruebas buscan abarcar los requisitos mínimos de la página.
+El suite de casos de prueba es el siguiente:
+
+
+# 1
+**Nombre** Registrar cuenta
+**Descripción** El usuario puede crear y registrar una cuenta
+**Procedimiento** 
+  -Click en registrar
+  -Ingresar correo
+  -Ingresar nombre de user
+  -Ingresar contraseña
+  -Click en guardar
+  
+# 2
+**Nombre** Login de cuenta
+**Descripción** El usuario puede ingresar a la página usando su cuenta
+**Procedimiento** 
+  -Click en login
+  -Ingresar correo
+  -Ingresar contraseña
+  -Click en ingresar
+  
+# 3
+**Nombre** Listar productos
+**Descripción** El usuario puede ver y navegar por una lista de productos
+**Procedimiento** 
+
+# 4
+**Nombre** Buscar producto
+**Descripción** El usuario puede buscar un producto por categorías
+**Procedimiento** 
+  -Buscar prenda por tipo de prenda
+  -Buscar prenda por tamaño
+  -Buscar prenda por color
+  
+# 5
+**Nombre** Mostrar detalles del producto
+**Descripción** El usuario puede ver los detalles del producto
+**Procedimiento** 
+  -Clickear en producto desde el menú
+  -Ver representaciones de alta resolución
+  -Ver descripciones
+  -Ver precios
+  
+# 6
+**Nombre** Comprar producto
+**Descripción** El usuario puede comprar un producto
+**Procedimiento** 
+  -Click en carro
+  -Agregar producto al carro
+  -Revisar selección
+  -Completar transacción
+  
+# 7
+**Nombre** Agregar producto
+**Descripción** El administrador puede agregar un producto
+**Procedimiento**
+  -Click en admin
+  -Añadir producto
+  
+# 8
+**Nombre** Editar producto
+**Descripción** El administrador puede editar un producto
+**Procedimiento**
+  -Click en admin
+  -Editar producto
+  
+# 9
+**Nombre** Eliminar producto
+**Descripción** El administrador puede eliminar un producto
+**Procedimiento**
+  -Click en admin
+  -Eliminar producto
+  
+# 10
+**Nombre** Generar informe
+**Descripción** El administrador puede generar un informe
+**Procedimiento**
+  -Click en admin
+  -Click en generar informe
+  -Ver informe
+
+## 4. Problemas y Soluciones
 
 ## Problema 1: Error al registrar cuenta
 **Solución**: Mejorar validación de correos y mensajes de error.
