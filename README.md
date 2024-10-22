@@ -1,6 +1,100 @@
 # Getting Started 
 
-## 1. Descripción
+## Estructura del Proyecto
+
+El proyecto se organiza en tres carpetas principales:
+
+- **backend**: Contiene el servidor y la lógica de la API.
+- **frontend**: Contiene la aplicación React.
+- **testing**: Contiene las pruebas automatizadas con Cypress.
+
+## Instalación y Uso
+
+### Backend
+
+1. Navega a la carpeta `backend`:
+
+   ```bash
+   cd backend
+   ```
+
+2. Instala las dependencias:
+
+   ```bash
+   npm install
+   ```
+
+3. Para iniciar el servidor en modo desarrollo, ejecuta:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Para iniciar el servidor en producción, ejecuta:
+
+   ```bash
+   npm run start
+   ```
+
+### Frontend
+
+1. Navega a la carpeta `frontend`:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Instala las dependencias:
+
+   ```bash
+   npm install
+   ```
+
+3. Para iniciar la aplicación React, ejecuta:
+
+   ```bash
+   npm run start
+   ```
+
+### Testing
+
+1. Navega a la carpeta `testing`:
+
+   ```bash
+   cd testing
+   ```
+
+2. Instala las dependencias:
+
+   ```bash
+   npm install
+   ```
+
+3. Para ejecutar las pruebas de Cypress, ejecuta:
+
+   ```bash
+   npx cypress open
+   ```
+
+
+## Información del proyecto
+
+### Alcance de la herramienta
+
+Cypress es una herramienta todo en uno (no incluye todo, pero abarca una amplia variedad de tipos de test). Esta herramienta permite realizar los siguientes tipos de pruebas:
+
+- **End-to-end (E2E)**: Simula la interacción de un usuario real con la aplicación web, generando comportamientos en los elementos de la página.
+
+- **Component Testing**: Permite testear componentes de aplicaciones en frameworks como React, Angular, Vue y Svelte.
+
+- **Accessibility Testing**: Verifica si las aplicaciones son accesibles para todas las personas y dispositivos.
+
+- **HTTP Requests Testing**: Facilita la prueba de rutas mediante consultas HTTP.
+
+Cypress es robusta y ofrece un visualizador de test, asegurando una experiencia de prueba completa y efectiva. Sin embargo, no puede realizar pruebas de rendimiento, interactuar con múltiples pestañas o ventanas, probar aplicaciones nativas, acceder al sistema operativo, simular condiciones de red, soportar navegadores antiguos ni probar servicios de terceros que requieran autenticación externa.
+
+
+### Descripción
 
 El proyecto consiste en una aplicación web de Moda Virtual para la plataforma Neon Threads, diseñada cn el objeetivo de facilitar la compra de productos de moda de manera eficiente y segura. La aplicación permite a los usuarios registrarse, iniciar sesión, explorar los productos, agregarlos a un carrito de compras y completar transacciones. Esta aplicación está construida usando un stack MERN (MongoDB, Express.js, React.js y Node.js), lo que proporciona una estructura escalable, dinámica y eficiente para manejar tanto el frontend como el backend. 
 
@@ -17,8 +111,8 @@ Infraestructura:
 - Axios (solicitudes HTTP)
 - JWT + bcrypt (autenticación y seguridad)
 
-## 3. Pruebas
-# Estrategia de Pruebas
+### Pruebas
+#### Estrategia de Pruebas
 Se diseña un suite de casos de prueba, el cuál luego prueba de forma automática en la página usando Cypress.io.
 Estas pruebas buscan abarcar los requisitos mínimos de la página.
 El suite de casos de prueba es el siguiente:
@@ -181,33 +275,32 @@ El suite de casos de prueba es el siguiente:
   -Ver informe
 
   
+### Problemas y Soluciones
 
-## 4. Problemas y Soluciones
-
-## Problema 1: Error al registrar cuenta
+#### Problema 1: Error al registrar cuenta
 **Solución**: Mejorar validación de correos y mensajes de error.
 
-## Problema 2: Fallo en el login
+#### Problema 2: Fallo en el login
 **Solución**: Revisar autenticación y comparación de contraseñas.
 
-## Problema 3: Productos no se muestran al listar
+#### Problema 3: Productos no se muestran al listar
 **Solución**: Optimizar consultas a la base de datos.
 
-## Problema 4: Búsqueda de productos lenta
+#### Problema 4: Búsqueda de productos lenta
 **Solución**: Agregar índices para mejorar rendimiento.
 
-## Problema 5: Detalles del producto incompletos
+#### Problema 5: Detalles del producto incompletos
 **Solución**: Verificar que todos los datos se carguen correctamente.
 
-## Problema 6: Problemas al comprar productos
+#### Problema 6: Problemas al comprar productos
 **Solución**: Revisar flujo de compra y métodos de pago.
 
-## Problema 7: Error al agregar productos
+#### Problema 7: Error al agregar productos
 **Solución**: Validar campos requeridos al crear productos.
 
-## Problema 8: Fallo al editar productos
+#### Problema 8: Fallo al editar productos
 **Solución**: Asegurar que los formularios carguen y actualicen correctamente.
 
-## Problema 9: Eliminación de productos fallida
+#### Problema 9: Eliminación de productos fallida
 **Solución**: Revisar proceso de eliminación en el catálogo y base de datos.
 
