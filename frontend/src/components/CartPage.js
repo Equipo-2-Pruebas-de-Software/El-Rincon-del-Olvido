@@ -1,41 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';  // Asegúrate de importar axios para hacer peticiones HTTP
 import '../styles/CartPage.css';  // Archivo CSS para personalizar los estilos
 
 const CartPage = () => {
-  // Simulación de productos en el carrito
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      nombre: 'Polera Neon',
-      precio: 9900,
-      cantidad: 1,
-      imagen: require('../assets/ropa/polera.jpg'), // Simula la imagen del producto
-    },
-    {
-      id: 2,
-      nombre: 'Poleron Neon',
-      precio: 19900,
-      cantidad: 2,
-      imagen: require('../assets/ropa/polera2.webp'),
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);  // Para manejar el estado de carga
+  const [error, setError] = useState('');
+
+  // Función para obtener el carrito desde el backend
+  const fetchCartItems = async () => {
+    const token = localStorage.getItem('token');  // Obtener el token de autenticación
+    try {
+      const response = await axios.get('/api/cart', {
+        headers: {
+          Authorization: `Bearer ${token}`  // Enviar el token en el encabezado Authorization
+        }
+      });
+      setCartItems(response.data.items);  // Asumiendo que los ítems del carrito están en response.data.items
+      setLoading(false);  // Termina el estado de carga
+    } catch (error) {
+      console.error('Error al obtener el carrito:', error);
+      setError('No se pudo cargar el carrito.');
+      setLoading(false);  // Termina el estado de carga
+    }
+  };
+
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
 
   // Función para actualizar la cantidad de un producto
-  const updateQuantity = (id, cantidad) => {
-    setCartItems(
-      cartItems.map(item =>
-        item.id === id ? { ...item, cantidad: Math.max(1, cantidad) } : item
-      )
-    );
+  const updateQuantity = async (id, cantidad) => {
+    const token = localStorage.getItem('token');
+    try {
+      await axios.post(`/api/cart/update-quantity/${id}`, { cantidad }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      // Actualiza la cantidad en el frontend localmente después de que el backend responda
+      setCartItems(
+        cartItems.map(item =>
+          item.id === id ? { ...item, cantidad: Math.max(1, cantidad) } : item
+        )
+      );
+    } catch (error) {
+      console.error('Error al actualizar la cantidad:', error);
+    }
   };
 
   // Función para eliminar un producto del carrito
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+  const removeItem = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      await axios.delete(`/api/cart/remove-item/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      // Actualiza el carrito localmente después de que el backend elimine el producto
+      setCartItems(cartItems.filter(item => item.id !== id));
+    } catch (error) {
+      console.error('Error al eliminar el producto del carrito:', error);
+    }
   };
 
   // Calcular el total del carrito
   const total = cartItems.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+
+  if (loading) {
+    return <p className="text-center">Cargando carrito...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center">{error}</p>;
+  }
 
   return (
     <div className="cart-container">
