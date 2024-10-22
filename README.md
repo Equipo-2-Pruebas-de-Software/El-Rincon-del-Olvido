@@ -41,6 +41,8 @@ El suite de casos de prueba es el siguiente:
   -Ingresar contraseña
   
   -Click en guardar
+
+
   
 **2**
 
@@ -57,6 +59,8 @@ El suite de casos de prueba es el siguiente:
   -Ingresar contraseña
   
   -Click en ingresar
+
+
   
 **3**
 
@@ -65,6 +69,8 @@ El suite de casos de prueba es el siguiente:
 **Descripción** El usuario puede ver y navegar por una lista de productos
 
 **Procedimiento** 
+
+
 
 **4**
 
@@ -79,6 +85,8 @@ El suite de casos de prueba es el siguiente:
   -Buscar prenda por tamaño
   
   -Buscar prenda por color
+
+
   
 **5**
 
@@ -95,6 +103,8 @@ El suite de casos de prueba es el siguiente:
   -Ver descripciones
   
   -Ver precios
+
+
   
 **6**
 
@@ -111,6 +121,8 @@ El suite de casos de prueba es el siguiente:
   -Revisar selección
   
   -Completar transacción
+
+
   
 **7**
 
@@ -123,6 +135,8 @@ El suite de casos de prueba es el siguiente:
   -Click en admin
   
   -Añadir producto
+
+
   
 **8**
 
@@ -135,6 +149,8 @@ El suite de casos de prueba es el siguiente:
   -Click en admin
   
   -Editar producto
+
+
   
 **9**
 
@@ -147,6 +163,8 @@ El suite de casos de prueba es el siguiente:
   -Click en admin
   
   -Eliminar producto
+
+
   
 **10**
 
@@ -161,6 +179,8 @@ El suite de casos de prueba es el siguiente:
   -Click en generar informe
   
   -Ver informe
+
+  
 
 ## 4. Problemas y Soluciones
 
