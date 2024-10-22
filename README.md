@@ -1,6 +1,6 @@
 # Getting Started 
 
-## Descripción
+## 1. Descripción
 
 El proyecto consiste en una aplicación web de Moda Virtual para la plataforma Neon Threads, diseñada cn el objeetivo de facilitar la compra de productos de moda de manera eficiente y segura. La aplicación permite a los usuarios registrarse, iniciar sesión, explorar los productos, agregarlos a un carrito de compras y completar transacciones. Esta aplicación está construida usando un stack MERN (MongoDB, Express.js, React.js y Node.js), lo que proporciona una estructura escalable, dinámica y eficiente para manejar tanto el frontend como el backend. 
 
@@ -17,7 +17,7 @@ Infraestructura:
 - Axios (solicitudes HTTP)
 - JWT + bcrypt (autenticación y seguridad)
 
-# Problemas y Soluciones
+## 2. Problemas y Soluciones
 
 ## Problema 1: Error al registrar cuenta
 **Solución**: Mejorar validación de correos y mensajes de error.
