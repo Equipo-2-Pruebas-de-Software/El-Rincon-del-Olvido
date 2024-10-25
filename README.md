@@ -280,5 +280,12 @@ El suite de casos de prueba es el siguiente:
 #### Problema 1: Fallo en el login
 **Solución**:  Implementar un manejador de estado para toda la aplicación.
 
+#### Problema 2: Errores en la comunicación entre frontend y backend
+**Solución**:  Probar cada endpoint antes de conectarlo al frontend y manejar errores de manera clara.
 
+#### Problema 3: Dificultad para hacer pruebas automáticas
+**Solución**:  Hacer pruebas modulares y usar identificadores claros que no cambien con facilidad.
+
+#### Problema 4: Redirecciones incorrectas luego del login
+**Solución**:  Revisamos y corregimos la lógica de navegación.
 
