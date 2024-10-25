@@ -11,11 +11,7 @@ const CartPage = () => {
   const fetchCartItems = async () => {
     const token = localStorage.getItem('token');  // Obtener el token de autenticación
     try {
-      const response = await axios.get('http://localhost:5000/api/cart/cart', {
-        headers: {
-          Authorization: `Bearer ${token}`  // Enviar el token en el encabezado Authorization
-        }
-      });
+      const response = await axios.get('http://localhost:5000/api/cart/cart');
       setCartItems(response.data.items);  // Asumiendo que los ítems del carrito están en response.data.items
       setLoading(false);  // Termina el estado de carga
     } catch (error) {
@@ -33,11 +29,7 @@ const CartPage = () => {
   const updateQuantity = async (id, cantidad) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`http://localhost:5000/api/cart/update-quantity/${id}`, { cantidad }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      await axios.post(`http://localhost:5000/api/cart/update-quantity/${id}`, { cantidad });
       // Actualiza la cantidad en el frontend localmente después de que el backend responda
       setCartItems(
         cartItems.map(item =>
@@ -53,11 +45,7 @@ const CartPage = () => {
   const removeItem = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/cart/remove-item/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      await axios.delete(`http://localhost:5000/api/cart/remove-item/${id}`);
       // Actualiza el carrito localmente después de que el backend elimine el producto
       setCartItems(cartItems.filter(item => item.id !== id));
     } catch (error) {
