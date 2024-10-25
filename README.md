@@ -113,7 +113,7 @@ Infraestructura:
 
 ### Pruebas
 #### Estrategia de Pruebas
-Se diseña un suite de casos de prueba, el cuál luego prueba de forma automática en la página usando Cypress.io.
+Se diseña un suite de casos de prueba, el cuál luego se prueba de forma automática en la página usando Cypress.io.
 Estas pruebas buscan abarcar los requisitos mínimos de la página.
 El suite de casos de prueba es el siguiente:
 
