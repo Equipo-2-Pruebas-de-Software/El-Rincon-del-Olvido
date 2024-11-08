@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// src/components/ProductDetail.js
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 const ProductDetail = () => {
-  const { id } = useParams(); // Obtenemos el ID del producto desde la URL
-   //const producto = productos.find((p) => p.id === parseInt(id)); // 
-  const [producto, setProducto] = useState(null); // Inicializamos el estado del producto
+  const { id } = useParams();
+  const [producto, setProducto] = useState(null);
+  const { isAuthenticated } = useContext(UserContext);  // Importar el estado de autenticación
+  const navigate = useNavigate();
 
   const getProductById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`); // Cambia la URL según tu API
+      const response = await fetch(`http://localhost:5000/api/products/${id}`);
       if (!response.ok) {
         throw new Error('Error al obtener el producto');
       }
@@ -23,6 +26,15 @@ const ProductDetail = () => {
   useEffect(() => {
     getProductById(id);
   }, [id]);
+
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      navigate('/login');  // Redirige a la página de inicio de sesión si no está autenticado
+    } else {
+      // Lógica para agregar el producto al carrito si está autenticado
+      console.log('Producto agregado al carrito:', producto);
+    }
+  };
 
   if (!producto) {
     return <p>Producto no encontrado.</p>;
@@ -45,7 +57,6 @@ const ProductDetail = () => {
           <p><strong>Descuento:</strong> {(producto.discount * 100).toFixed(0)}%</p>
           <p><strong>Precio Original:</strong> <del>${producto.originalPrice.toLocaleString('es-ES')}</del></p>
 
-          {/* Sección para mostrar las tallas disponibles */}
           <p><strong>Tallas Disponibles:</strong></p>
           <ul>
             {producto.availableSizes.map((talla) => (
@@ -53,7 +64,8 @@ const ProductDetail = () => {
             ))}
           </ul>
 
-          <button className="btn btn-primary">Agregar al Carrito</button>
+          {/* Botón para agregar al carrito */}
+          <button className="btn btn-primary" onClick={handleAddToCart}>Agregar al Carrito</button>
         </div>
       </div>
     </div>

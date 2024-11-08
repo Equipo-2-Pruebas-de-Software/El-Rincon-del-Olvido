@@ -6,27 +6,35 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userName, setUserName] = useState(null);
   const [userAdmin, setUserAdmin] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);  // Nueva propiedad
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.name && user.isAdmin) {
+    const token = localStorage.getItem('token');
+    if (user && token) {
       setUserName(user.name);
-      setUserAdmin(user.isAdmin);
+      setUserAdmin(user.isAdmin || false);
+      setIsAuthenticated(true);
     }
   }, []);
 
-  const updateUserName = (name) => {
-    setUserName(name);
-    localStorage.setItem('user', JSON.stringify({ name })); // Guarda en localStorage también
+  const updateUser = (user) => {
+    setUserName(user.name);
+    setUserAdmin(user.isAdmin);
+    setIsAuthenticated(true);
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
   const logoutUser = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     setUserName(null);
+    setUserAdmin(null);
+    setIsAuthenticated(false);
   };
 
   return (
-    <UserContext.Provider value={{ userName, userAdmin, updateUserName, logoutUser }}>
+    <UserContext.Provider value={{ userName, userAdmin, isAuthenticated, updateUser, logoutUser }}>
       {children}
     </UserContext.Provider>
   );

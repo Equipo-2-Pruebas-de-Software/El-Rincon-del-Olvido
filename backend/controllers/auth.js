@@ -24,10 +24,13 @@ exports.register = async (req, res) => {
     // Generar token JWT
     const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(201).json({ 
-      message: 'Usuario registrado exitosamente' 
+    res.status(201).json({
+      message: 'Usuario registrado exitosamente',
+      token,
+      user: { id: newUser._id, name: newUser.name, email: newUser.email }
     });
   } catch (error) {
+    console.error('Error en el registro:', error);  // Log de errores para depuración
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
@@ -52,12 +55,13 @@ exports.login = async (req, res) => {
     // Generar token JWT
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ 
+    res.json({
       message: 'Inicio de sesión exitoso',
-      token, 
-      user: { id: user._id, name: user.name, email: user.email } 
+      token,
+      user: { id: user._id, name: user.name, email: user.email }
     });
   } catch (error) {
+    console.error('Error en el inicio de sesión:', error);  // Log de errores para depuración
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };

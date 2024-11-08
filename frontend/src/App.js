@@ -27,11 +27,13 @@ function App() {
             <Route path="/login" element={<AuthPage />} />
             <Route path="/carrito" element={<CartPage />} />
             <Route path="/busqueda-avanzada" element={<AdvancedSearch />} />
-            <Route path='' element={<AdminRouter />} >
-            <Route path='/admin/dashboard' element={<AdminDashboard />} />
-            <Route path='/admin/product/:id' element={<AdminProductEdit />} />
-          </Route>
-        </Routes>
+
+            {/* Rutas protegidas para el administrador */}
+            <Route element={<AdminRouter />}>
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/product/:id" element={<AdminProductEdit />} />
+            </Route>
+          </Routes>
         </main>
         <Footer />
       </Router>
