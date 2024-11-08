@@ -6,15 +6,25 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userName, setUserName] = useState(null);
   const [userAdmin, setUserAdmin] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);  // Nueva propiedad
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const storedUser = localStorage.getItem('user');
     const token = localStorage.getItem('token');
-    if (user && token) {
-      setUserName(user.name);
-      setUserAdmin(user.isAdmin || false);
-      setIsAuthenticated(true);
+
+    // Solo intenta parsear si storedUser tiene un valor no nulo
+    if (storedUser && token) {
+      try {
+        const user = JSON.parse(storedUser);
+        if (user) {
+          setUserName(user.name);
+          setUserAdmin(user.isAdmin || false);
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Error al parsear el usuario:', error);
+        localStorage.removeItem('user');  // Limpia localStorage en caso de error
+      }
     }
   }, []);
 

@@ -6,7 +6,6 @@ import UserContext from '../context/UserContext';
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { userName, userAdmin, isAuthenticated, logoutUser } = useContext(UserContext);
-
   const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
@@ -61,11 +60,13 @@ const Header = () => {
           </form>
 
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/carrito">
-                <i className="fas fa-shopping-cart"></i> Carrito
-              </Link>
-            </li>
+            {isAuthenticated && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/carrito">
+                  <i className="fas fa-shopping-cart"></i> Carrito
+                </Link>
+              </li>
+            )}
 
             {isAuthenticated ? (
               <li className="nav-item dropdown">
