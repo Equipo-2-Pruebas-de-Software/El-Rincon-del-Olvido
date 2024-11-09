@@ -66,7 +66,6 @@ exports.removeFromCart = async (req, res) => {
 };
 
 // Completar la compra
-// Completar la compra
 exports.checkout = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id }).populate('items.product');

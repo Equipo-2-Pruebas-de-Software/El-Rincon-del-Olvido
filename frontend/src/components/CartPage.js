@@ -8,7 +8,9 @@ const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [purchaseSuccess, setPurchaseSuccess] = useState(false); // Nuevo estado para el éxito de la compra
+  const [purchaseSuccess, setPurchaseSuccess] = useState(false); 
+  const [successMessage, setSuccessMessage] = useState(''); // Nuevo mensaje de éxito
+
   const { isAuthenticated } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -24,9 +26,13 @@ const CartPage = () => {
     try {
       const response = await axios.get('http://localhost:5000/api/cart/cart');
       setCartItems(response.data.items);
+      setError(''); // Limpiar error si carga correctamente
     } catch (error) {
-      console.error('Error al obtener el carrito:', error);
-      setError('No se pudo cargar el carrito.');
+      if (error.response && error.response.status === 404) {
+        setError(error.response.data.message); // Mensaje "El carrito está vacío"
+      } else {
+        setError('No se pudo cargar el carrito.');
+      }
     } finally {
       setLoading(false);
     }
@@ -58,24 +64,24 @@ const CartPage = () => {
   const handleCheckout = async () => {
     try {
       const response = await axios.post('http://localhost:5000/api/cart/checkout');
-      setPurchaseSuccess(true);  // Indicar que la compra fue exitosa
-      setCartItems([]);  // Vaciar el carrito en el frontend también
-      alert(response.data.message); // Mensaje de éxito
+      setPurchaseSuccess(true); 
+      setCartItems([]); 
+      setSuccessMessage(response.data.message); // Mensaje de éxito desde el backend
     } catch (error) {
-      console.error('Error al procesar la compra:', error);
-      setError('No se pudo completar la compra.');
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message); // Mensaje de error desde el backend
+      } else {
+        setError('No se pudo completar la compra.');
+      }
     }
   };
 
-  // Calcular el total del carrito
-  const total = cartItems.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
-
-  // Si la compra fue exitosa, mostrar la alerta de éxito con redirección
+  // Si la compra fue exitosa, mostrar el mensaje de éxito con redirección
   if (purchaseSuccess) {
     return (
       <div className="alert alert-success text-center" role="alert">
         <h4 className="alert-heading">¡Compra completada con éxito!</h4>
-        <p>Gracias por su compra. Rediríjase a la página principal para continuar.</p>
+        <p>{successMessage}</p> {/* Muestra el mensaje del backend */}
         <button className="btn btn-primary" onClick={() => navigate('/')}>
           Ir a la página principal
         </button>
