@@ -4,12 +4,6 @@ pipeline {
         nodejs 'nodejs'
     }
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out...'
-                checkout scmGit(branches: [[name: 'develop']])
-            }
-        }
         stage('Build') {
             steps {
                 echo 'Building...'
