@@ -12,29 +12,20 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'Building...'
                 sh 'npm install'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
-                sh ''
+                echo 'Testing...'
+                sh 'cd Testing'
+                sh 'npx cypress run'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo 'Deploying...'
             }
-        }
-    }post { 
-        always { 
-            echo 'I will always run whether job is success or not'
-        }
-        success{
-            echo 'I will run only when job is success'
-        }
-        failure{
-            echo 'I will run when failure'
         }
     }}
