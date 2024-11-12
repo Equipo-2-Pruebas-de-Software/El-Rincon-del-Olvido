@@ -18,14 +18,15 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'npm install'
+                sh 'cd backend && npm install'
+                sh 'cd ../frontend && npm install'
+                sh 'cd ../testing && npm install'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
-                sh 'cd Testing'
-                sh 'npx cypress run'
+                sh 'cd testing && npx cypress run'
             }
         }
         stage('Deploy') {
