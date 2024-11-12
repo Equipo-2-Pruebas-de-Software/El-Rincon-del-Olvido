@@ -23,10 +23,16 @@ pipeline {
                 sh 'cd testing && npm install'
             }
         }
-        stage('Test') {
+        stage('Xvfb-Test') {
             steps {
-                echo 'Testing...'
-                sh 'cd testing && npx cypress run'
+                wrap([$class: 'Xvfb']) {
+                    stage('Test') {
+                        steps {
+                            echo 'Testing...'
+                            sh 'cd testing && npx cypress run'
+                        }
+                    }
+                }
             }
         }
         stage('Deploy') {
