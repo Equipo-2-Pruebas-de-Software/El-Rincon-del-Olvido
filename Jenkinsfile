@@ -7,7 +7,7 @@ pipeline {
         stage('Preparation') {
             steps {
                 cleanWs()
-                sh 'git config --global http.postBuffer 1048576000'
+                sh 'git config --global http.postBuffer 1572864000'
             }
         }
         stage('Checkout') {
@@ -39,5 +39,11 @@ pipeline {
             steps {
                 echo 'Deploying...'
             }
+        }
+    }
+    
+    post {
+        always {
+            slackSend message: "Pipeline ejecutado:- ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER} ${BUILD_URL}"
         }
     }}
