@@ -27,10 +27,10 @@ exports.register = async (req, res) => {
     res.status(201).json({
       message: 'Usuario registrado exitosamente',
       token,
-      user: { id: newUser._id, name: newUser.name, email: newUser.email }
+      user: { id: newUser._id, name: newUser.name, email: newUser.email },
     });
   } catch (error) {
-    console.error('Error en el registro:', error);  // Log de errores para depuración
+    console.error('Error en el registro:', error); // Log de errores para depuración
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
@@ -58,10 +58,10 @@ exports.login = async (req, res) => {
     res.json({
       message: 'Inicio de sesión exitoso',
       token,
-      user: { id: user._id, name: user.name, email: user.email }
+      user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (error) {
-    console.error('Error en el inicio de sesión:', error);  // Log de errores para depuración
+    console.error('Error en el inicio de sesión:', error); // Log de errores para depuración
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };

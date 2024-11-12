@@ -2,54 +2,57 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const Product = new Schema({
+const Product = new Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     category: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     price: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     discount: {
-        type: Number, // Descuento como número decimal
-        required: false
+      type: Number, // Descuento como número decimal
+      required: false,
     },
     originalPrice: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     image: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     availableSizes: {
-        type: [String],
-        required: false
+      type: [String],
+      required: false,
     },
     views: {
-        type: Number,
-        default: 0,
-        required: true
+      type: Number,
+      default: 0,
+      required: true,
     },
     addToCartCount: {
-        type: Number,
-        default: 0,
-        required: true
+      type: Number,
+      default: 0,
+      required: true,
     },
     purchaseCount: {
-        type: Number,
-        default: 0,
-        required: true
-    }
-}, { timestamps: true });
+      type: Number,
+      default: 0,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('Product', Product);
