@@ -25,11 +25,11 @@ pipeline {
         }
         stage('Xvfb-Test') {
             steps {
-                wrap([$class: 'Xvfb']) {
-                    stage('Test') {
-                        steps {
-                            echo 'Testing...'
-                            sh 'cd testing && npx cypress run'
+                script {
+                    wrap([$class: 'Xvfb']) {
+                        stage('Test') {
+                                echo 'Testing...'
+                                sh 'cd testing && npx cypress run'
                         }
                     }
                 }
