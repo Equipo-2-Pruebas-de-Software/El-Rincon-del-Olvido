@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const Product = new Schema({
     name: {
         type: String,
-        required: true // Cambiado a true si es necesario
+        required: true
     },
     description: {
         type: String,
@@ -17,7 +17,7 @@ const Product = new Schema({
     },
     price: {
         type: Number,
-        required: true // Cambiado a true si es necesario
+        required: true
     },
     discount: {
         type: Number, // Descuento como número decimal
@@ -25,7 +25,7 @@ const Product = new Schema({
     },
     originalPrice: {
         type: Number,
-        required: true // Cambiado a true si es necesario
+        required: true
     },
     image: {
         type: String,
@@ -34,7 +34,22 @@ const Product = new Schema({
     availableSizes: {
         type: [String],
         required: false
+    },
+    views: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    addToCartCount: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    purchaseCount: {
+        type: Number,
+        default: 0,
+        required: true
     }
-}, { timestamps: true }); // Opcional: agrega timestamps para createdAt y updatedAt
+}, { timestamps: true });
 
 module.exports = mongoose.model('Product', Product);

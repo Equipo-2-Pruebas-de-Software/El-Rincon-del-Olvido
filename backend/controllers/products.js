@@ -121,11 +121,137 @@ const filterProducts = async (req, res) => {
     }
 };
 
+// Incrementar contador de vistas
+const incrementViewCount = async (req, res) => {
+    try {
+        console.log(`Incrementando contador de vistas para el producto con ID: ${req.params.id}`);
+        const product = await Product.findById(req.params.id);
+        
+        if (!product) {
+            console.warn(`Producto no encontrado con ID: ${req.params.id}`);
+            return res.status(404).json({ message: 'Producto no encontrado' });
+        }
+        
+        product.views += 1;
+        await product.save();
+
+        res.status(200).json({ message: 'Contador de vistas incrementado', product });
+    } catch (error) {
+        console.error('Error al incrementar el contador de vistas:', error);
+        res.status(500).json({ message: 'Error al incrementar el contador de vistas', error });
+    }
+};
+
+// Incrementar contador de añadido al carrito
+const incrementAddToCartCount = async (req, res) => {
+    try {
+        console.log(`Incrementando contador de añadido al carrito para el producto con ID: ${req.params.id}`);
+        const product = await Product.findById(req.params.id);
+        
+        if (!product) {
+            console.warn(`Producto no encontrado con ID: ${req.params.id}`);
+            return res.status(404).json({ message: 'Producto no encontrado' });
+        }
+        
+        product.addToCartCount += 1;
+        await product.save();
+
+        res.status(200).json({ message: 'Contador de añadido al carrito incrementado', product });
+    } catch (error) {
+        console.error('Error al incrementar el contador de añadido al carrito:', error);
+        res.status(500).json({ message: 'Error al incrementar el contador de añadido al carrito', error });
+    }
+};
+
+// Incrementar contador de compras
+const incrementPurchaseCount = async (req, res) => {
+    try {
+        console.log(`Incrementando contador de compras para el producto con ID: ${req.params.id}`);
+        const product = await Product.findById(req.params.id);
+        
+        if (!product) {
+            console.warn(`Producto no encontrado con ID: ${req.params.id}`);
+            return res.status(404).json({ message: 'Producto no encontrado' });
+        }
+        
+        product.purchaseCount += 1;
+        await product.save();
+
+        res.status(200).json({ message: 'Contador de compras incrementado', product });
+    } catch (error) {
+        console.error('Error al incrementar el contador de compras:', error);
+        res.status(500).json({ message: 'Error al incrementar el contador de compras', error });
+    }
+};
+
+// Generar reporte de productos
+const generateReport = async (req, res) => {
+    try {
+        // Obtener el top 5 de productos más vistos
+        const mostViewedProducts = await Product.find().sort({ views: -1 }).limit(5);
+
+        // Obtener el top 5 de productos más añadidos al carrito
+        const mostAddedToCartProducts = await Product.find().sort({ addToCartCount: -1 }).limit(5);
+
+        // Obtener el top 5 de productos más vendidos
+        const bestSellingProducts = await Product.find().sort({ purchaseCount: -1 }).limit(5);
+
+        // Calcular el total de ventas
+        const totalSales = await Product.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    total: { $sum: "$purchaseCount" }
+                }
+            }
+        ]);
+
+        // Calcular el total de vistas
+        const totalViews = await Product.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    total: { $sum: "$views" }
+                }
+            }
+        ]);
+
+        // Calcular el total de veces añadido al carrito
+        const totalAddToCartCount = await Product.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    total: { $sum: "$addToCartCount" }
+                }
+            }
+        ]);
+
+        // Construir el reporte con todas las estadísticas
+        const report = {
+            mostViewedProducts,
+            mostAddedToCartProducts,
+            bestSellingProducts,
+            totalSales: totalSales[0]?.total || 0,             // Total de ventas
+            totalViews: totalViews[0]?.total || 0,              // Total de vistas
+            totalAddToCartCount: totalAddToCartCount[0]?.total || 0 // Total de veces añadido al carrito
+        };
+
+        res.status(200).json(report);
+    } catch (error) {
+        console.error('Error al generar el reporte:', error);
+        res.status(500).json({ message: 'Error al generar el reporte', error });
+    }
+};
+
 module.exports = {
     createProduct,
     getProducts,
     getProductById,
     filterProducts,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    incrementViewCount,
+    incrementAddToCartCount,
+    incrementPurchaseCount,
+    generateReport
 };
