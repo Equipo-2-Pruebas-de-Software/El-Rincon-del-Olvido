@@ -7,6 +7,7 @@ pipeline {
         stage('Preparation') {
             steps {
                 cleanWs()
+                sh 'git config --global http.postBuffer 1048576000'
             }
         }
         stage('Checkout') {
