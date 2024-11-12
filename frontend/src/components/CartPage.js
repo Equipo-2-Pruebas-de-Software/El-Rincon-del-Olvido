@@ -89,6 +89,8 @@ const CartPage = () => {
     );
   }
 
+  const total = cartItems.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+
   if (loading) return <p className="text-center">Cargando carrito...</p>;
   if (error) return <p className="text-center">{error}</p>;
 
