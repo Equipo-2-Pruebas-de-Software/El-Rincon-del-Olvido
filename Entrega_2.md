@@ -4,7 +4,7 @@
 ## Descripción del trabajo realizado
 
 ### Proyecto
-Se implemento panel de administrador para poder crear, leer, actualizar y eliminar los productos.
+Se implemento panel de administrador para poder crear, leer, actualizar y eliminar los productos. Esto tambien incluye modificar el stock de cada producto.
 
 ### Especificar dependencias entre la herramienta y la aplicación
 
