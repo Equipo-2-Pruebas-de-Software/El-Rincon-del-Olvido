@@ -9,9 +9,16 @@ Jenkins es un servidor de automatización de código abierto centrado principalm
 ## Descripción del trabajo realizado
 
 ### Proyecto
-Se implemento panel de administrador para poder crear, leer, actualizar y eliminar los productos. Esto tambien incluye modificar el stock de cada producto.
 
-### Especificar dependencias entre la herramienta y la aplicación
+Requisitos no funcionales:
+- Elegir entre ocultar o ver la contraseña al iniciar sesión
+
+Requisitos funcionales:
+- Eliminar un producto del carrito
+- Agregar productos al carrito
+- Proceder a comprar y vaciar carrito
+- Mantener sesión loggeada del usuario
+- Se implemento panel de administrador para poder crear, leer, actualizar y eliminar los productos. Esto tambien incluye modificar el stock de cada producto.
 
 ## Uso de Jenkins
 
