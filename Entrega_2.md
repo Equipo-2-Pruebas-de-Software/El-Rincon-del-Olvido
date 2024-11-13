@@ -31,4 +31,4 @@ Jenkins está enlazado con Github mediante un Webhook, lo cuál permite la comun
 ## Problemas encontrados y soluciones
 • Error al crear cuentas de admin que no eran reconocidas por el sistema de token
 
-Solución: modificar las logica de los tokens para que consideraran el campo isAdmin al momento de validar el token, ademas de agregar un nuevo middleware que es exclusivo para autorizaradministradores.
+Solución: modificar las logica de los tokens para que consideraran el campo isAdmin al momento de validar el token, ademas de agregar un nuevo middleware que es exclusivo para autorizar a administradores.
