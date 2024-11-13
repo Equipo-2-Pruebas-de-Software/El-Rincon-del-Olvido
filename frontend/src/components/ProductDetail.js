@@ -1,4 +1,3 @@
-// src/components/ProductDetail.js
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,17 +7,37 @@ const ProductDetail = () => {
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
   const [quantity, setQuantity] = useState(1); // Estado para la cantidad del producto
-  const { isAuthenticated, user } = useContext(UserContext); 
+  const { isAuthenticated } = useContext(UserContext); // Importar el estado de autenticación
   const navigate = useNavigate();
 
   // Obtener datos del producto por ID
   const getProductById = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/products/${id}`);
-      setProducto(response.data);
+      // Primero, obtener el producto
+      const response = await fetch(`http://localhost:5000/api/products/${id}`);
+      if (!response.ok) {
+        throw new Error('Error al obtener el producto');
+      }
+      const data = await response.json();
+      setProducto(data);
+      await incrementViews(id);
     } catch (error) {
-      console.error('Error al obtener el producto:', error);
+      console.error(error);
       setProducto(null);
+    }
+  };
+
+  const incrementViews = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/incrementViews/${id}`, {
+        method: 'PATCH',
+      });
+      if (!response.ok) {
+        throw new Error('Error al incrementar las vistas');
+      }
+      console.log('Vista incrementada con éxito');
+    } catch (error) {
+      console.error('Error al incrementar las vistas', error);
     }
   };
 
@@ -42,7 +61,7 @@ const ProductDetail = () => {
   // Lógica para agregar el producto al carrito
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      navigate('/login', { state: { from: `/products/${id}` } }); // Redirigir al login si no está autenticado
+      navigate('/login'); // Redirige a la página de inicio de sesión si no está autenticado
     } else {
       const cart = getCart();
 
@@ -79,17 +98,34 @@ const ProductDetail = () => {
           <img
             src={`data:image/jpeg;base64,${producto.image}`}
             alt={producto.name}
-            style={{ width: '100%', height: '400px', objectFit: 'contain', backgroundColor: '#ffffff' }}
+            style={{
+              width: '100%',
+              height: '400px',
+              objectFit: 'contain',
+              backgroundColor: '#ffffff',
+            }}
           />
         </div>
         <div className="col-md-6">
           <h2>{producto.name}</h2>
           <h4 className="text-muted">{producto.description}</h4>
+          <p className="mt-3">
+            <strong>Precio:</strong> ${producto.price.toLocaleString('es-ES')}
+          </p>
+          <p>
+            <strong>Descuento:</strong> {(producto.discount * 100).toFixed(0)}%
+          </p>
+          <p>
+            <strong>Precio Original:</strong>{' '}
+            <del>${producto.originalPrice.toLocaleString('es-ES')}</del>
+          </p>
           <p className="mt-3"><strong>Precio:</strong> ${producto.price?.toLocaleString('es-ES')}</p>
           <p><strong>Descuento:</strong> {(producto.discount * 100).toFixed(0)}%</p>
           <p><strong>Precio Original:</strong> <del>${producto.originalPrice?.toLocaleString('es-ES')}</del></p>
 
-          <p><strong>Tallas Disponibles:</strong></p>
+          <p>
+            <strong>Tallas Disponibles:</strong>
+          </p>
           <ul>
             {producto.availableSizes?.map((talla) => (
               <li key={talla}>{talla}</li>

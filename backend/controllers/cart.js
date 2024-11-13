@@ -18,7 +18,7 @@ exports.addToCart = async (req, res) => {
       cart = new Cart({ user: req.user.id, items: [] });
     }
 
-    const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
+    const itemIndex = cart.items.findIndex((item) => item.product.toString() === productId);
 
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
@@ -56,7 +56,7 @@ exports.removeFromCart = async (req, res) => {
       return res.status(404).json({ message: 'Carrito no encontrado' });
     }
 
-    cart.items = cart.items.filter(item => item.product.toString() !== req.params.productId);
+    cart.items = cart.items.filter((item) => item.product.toString() !== req.params.productId);
     await cart.save();
 
     res.json(cart);
@@ -78,7 +78,7 @@ exports.checkout = async (req, res) => {
     // Guardar cada item del carrito en el historial
     cart.items.forEach(async (item) => {
       const history = new History({
-        nameProduct: item.product.name,         // Usar el nombre del producto del modelo poblado
+        nameProduct: item.product.name, // Usar el nombre del producto del modelo poblado
         userBuyer: cart.user,
         datePurchase: currentDate,
         quantityProduct: item.quantity,

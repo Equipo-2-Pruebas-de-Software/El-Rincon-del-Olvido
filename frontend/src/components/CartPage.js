@@ -78,6 +78,10 @@ const CartPage = () => {
     );
   }
 
+
+  if (loading) return <p className="text-center">Cargando carrito...</p>;
+  if (error) return <p className="text-center">{error}</p>;
+
   return (
     <div className="cart-container">
       <h2 className="text-center">Tu Carrito</h2>

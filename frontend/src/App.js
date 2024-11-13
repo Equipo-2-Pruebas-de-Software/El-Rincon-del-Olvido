@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import AdminDashboard from './components/AdminDashboard';
 import AdminProductEdit from './components/AdminProductEdit';
 import { UserProvider } from './context/UserContext';
+import AdminReport from './components/AdminReport';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/login" element={<AuthPage />} />
             <Route path="/carrito" element={<CartPage />} />
             <Route path="/busqueda-avanzada" element={<AdvancedSearch />} />
+            <Route path="/admin/reporte" element={<AdminReport />} />
 
             {/* Rutas protegidas para el administrador */}
             <Route element={<AdminRouter />}>
