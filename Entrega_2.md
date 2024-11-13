@@ -3,9 +3,9 @@
 ## Alcances de la herramienta
 ## Descripción del trabajo realizado
 
-    ### Proyecto
+### Proyecto
 
-    ### Especificar dependencias entre la herramienta y la aplicación
+### Especificar dependencias entre la herramienta y la aplicación
 
 ## Uso de Jenkins
 
