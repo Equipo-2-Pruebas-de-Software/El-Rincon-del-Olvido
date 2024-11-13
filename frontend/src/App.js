@@ -28,7 +28,7 @@ function App() {
             <Route path="/login" element={<AuthPage />} />
             <Route path="/carrito" element={<CartPage />} />
             <Route path="/busqueda-avanzada" element={<AdvancedSearch />} />
-            <Route path="/reporte" element={<AdminReport />} />
+            <Route path="/admin/reporte" element={<AdminReport />} />
 
             {/* Rutas protegidas para el administrador */}
             <Route element={<AdminRouter />}>
