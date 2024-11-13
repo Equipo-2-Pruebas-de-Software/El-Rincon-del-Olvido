@@ -18,7 +18,7 @@ exports.addToCart = async (req, res) => {
       cart = new Cart({ user: req.user.id, items: [] });
     }
 
-    const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
+    const itemIndex = cart.items.findIndex((item) => item.product.toString() === productId);
 
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
@@ -56,7 +56,7 @@ exports.removeFromCart = async (req, res) => {
       return res.status(404).json({ message: 'Carrito no encontrado' });
     }
 
-    cart.items = cart.items.filter(item => item.product.toString() !== req.params.productId);
+    cart.items = cart.items.filter((item) => item.product.toString() !== req.params.productId);
     await cart.save();
 
     res.json(cart);
@@ -68,26 +68,31 @@ exports.removeFromCart = async (req, res) => {
 // Completar la compra
 exports.checkout = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.user.id });
+    const cart = await Cart.findOne({ user: req.user.id }).populate('items.product');
     if (!cart || cart.items.length === 0) {
       return res.status(400).json({ message: 'El carrito está vacío' });
     }
 
-    // Aquí podrías implementar la lógica de pago o transacción
+    const currentDate = new Date(); // Fecha actual
 
-    //Añadir compra a historial
-    const cur_date = new Date().now().toString();
-
-    cart.items.map(async (item) => {
-      let history = new History({ nameProduct: item.product, userBuyer: cart.user, datePurchase: cur_date, quantityProduct: item.quantity });
+    // Guardar cada item del carrito en el historial
+    cart.items.forEach(async (item) => {
+      const history = new History({
+        nameProduct: item.product.name, // Usar el nombre del producto del modelo poblado
+        userBuyer: cart.user,
+        datePurchase: currentDate,
+        quantityProduct: item.quantity,
+      });
       await history.save();
     });
 
-    cart.items = [];  // Vaciar el carrito
+    // Vaciar el carrito después de completar la compra
+    cart.items = [];
     await cart.save();
 
     res.json({ message: 'Compra completada con éxito' });
   } catch (error) {
+    console.error('Error al completar la compra:', error);
     res.status(500).json({ message: 'Error al completar la compra' });
   }
 };

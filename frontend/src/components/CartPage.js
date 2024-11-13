@@ -1,36 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';  // Asegúrate de importar axios para hacer peticiones HTTP
-import '../styles/CartPage.css';  // Archivo CSS para personalizar los estilos
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import UserContext from '../context/UserContext';
+import '../styles/CartPage.css';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [loading, setLoading] = useState(true);  // Para manejar el estado de carga
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [purchaseSuccess, setPurchaseSuccess] = useState(false); 
+  const [successMessage, setSuccessMessage] = useState(''); // Nuevo mensaje de éxito
 
-  // Función para obtener el carrito desde el backend
+  const { isAuthenticated } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    } else {
+      fetchCartItems();
+    }
+  }, [isAuthenticated, navigate]);
+
   const fetchCartItems = async () => {
-    const token = localStorage.getItem('token');  // Obtener el token de autenticación
     try {
       const response = await axios.get('http://localhost:5000/api/cart/cart');
-      setCartItems(response.data.items);  // Asumiendo que los ítems del carrito están en response.data.items
-      setLoading(false);  // Termina el estado de carga
+      setCartItems(response.data.items);
+      setError(''); // Limpiar error si carga correctamente
     } catch (error) {
-      console.error('Error al obtener el carrito:', error);
-      setError('No se pudo cargar el carrito.');
-      setLoading(false);  // Termina el estado de carga
+      if (error.response && error.response.status === 404) {
+        setError(error.response.data.message); // Mensaje "El carrito está vacío"
+      } else {
+        setError('No se pudo cargar el carrito.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
-
-  // Función para actualizar la cantidad de un producto
   const updateQuantity = async (id, cantidad) => {
-    const token = localStorage.getItem('token');
     try {
       await axios.post(`http://localhost:5000/api/cart/update-quantity/${id}`, { cantidad });
-      // Actualiza la cantidad en el frontend localmente después de que el backend responda
       setCartItems(
         cartItems.map(item =>
           item.id === id ? { ...item, cantidad: Math.max(1, cantidad) } : item
@@ -41,28 +51,48 @@ const CartPage = () => {
     }
   };
 
-  // Función para eliminar un producto del carrito
   const removeItem = async (id) => {
-    const token = localStorage.getItem('token');
     try {
       await axios.delete(`http://localhost:5000/api/cart/remove-item/${id}`);
-      // Actualiza el carrito localmente después de que el backend elimine el producto
       setCartItems(cartItems.filter(item => item.id !== id));
     } catch (error) {
       console.error('Error al eliminar el producto del carrito:', error);
     }
   };
 
-  // Calcular el total del carrito
+  // Función para proceder al pago
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/cart/checkout');
+      setPurchaseSuccess(true); 
+      setCartItems([]); 
+      setSuccessMessage(response.data.message); // Mensaje de éxito desde el backend
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message); // Mensaje de error desde el backend
+      } else {
+        setError('No se pudo completar la compra.');
+      }
+    }
+  };
+
+  // Si la compra fue exitosa, mostrar el mensaje de éxito con redirección
+  if (purchaseSuccess) {
+    return (
+      <div className="alert alert-success text-center" role="alert">
+        <h4 className="alert-heading">¡Compra completada con éxito!</h4>
+        <p>{successMessage}</p> {/* Muestra el mensaje del backend */}
+        <button className="btn btn-primary" onClick={() => navigate('/')}>
+          Ir a la página principal
+        </button>
+      </div>
+    );
+  }
+
   const total = cartItems.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
 
-  if (loading) {
-    return <p className="text-center">Cargando carrito...</p>;
-  }
-
-  if (error) {
-    return <p className="text-center">{error}</p>;
-  }
+  if (loading) return <p className="text-center">Cargando carrito...</p>;
+  if (error) return <p className="text-center">{error}</p>;
 
   return (
     <div className="cart-container">
@@ -96,7 +126,7 @@ const CartPage = () => {
       {cartItems.length > 0 && (
         <div className="cart-total">
           <h4>Total: ${total.toLocaleString()}</h4>
-          <button className="btn btn-primary w-100">Proceder al pago</button>
+          <button className="btn btn-primary w-100" onClick={handleCheckout}>Proceder al pago</button>
         </div>
       )}
     </div>

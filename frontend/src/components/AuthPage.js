@@ -1,45 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import UserContext from '../context/UserContext';  // Importar el contexto de usuario
+import { FaEye, FaEyeSlash } from 'react-icons/fa';  // Importar los íconos
 import '../styles/AuthPage.css';
 
 const AuthPage = () => {
+  const { updateUser } = useContext(UserContext);  // Obtener el método updateUser del contexto
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);  // Estado para la visibilidad de la contraseña
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setErrorMessage('');  // NUEVO Limpiar mensaje de error al cambiar el formulario
+    setErrorMessage('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (isLogin) {
-        // Iniciar sesión
-        const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post(`http://localhost:5000/api/auth/${isLogin ? 'login' : 'register'}`, 
+        isLogin ? { email, password } : { name, email, password }
+      );
 
-
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate('/'); 
-      } else {
-        // Registro
-        const response = await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
-        localStorage.setItem('user', JSON.stringify(response.data.user)); // NUEVO
-        navigate('/'); // NUEVO
-      }
+      localStorage.setItem('token', response.data.token);
+      updateUser(response.data.user);  // Actualizar el contexto de usuario
+      navigate('/');  // Redirigir al inicio
     } catch (error) {
-      // Mostrar mensaje de error si el nombre de usuario ya existe
-      if (error.response && error.response.data) {
-        setErrorMessage(error.response.data.message);
-      } else {
-        setErrorMessage('Error en el registro o inicio de sesión');
-      }
+      setErrorMessage(error.response?.data?.message || 'Error en el registro o inicio de sesión');
     }
+  };
+
+  // Función para alternar la visibilidad de la contraseña
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -62,10 +60,10 @@ const AuthPage = () => {
                   autoComplete="off"
                 />
               </div>
-              <div className="mb-3">
+              <div className="mb-3 position-relative">
                 <label htmlFor="login-password" className="form-label">Contraseña</label>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}  // Cambiar tipo según el estado
                   className="form-control"
                   id="login-password"
                   value={password}
@@ -74,6 +72,22 @@ const AuthPage = () => {
                   required
                   autoComplete="off"
                 />
+                <button
+                  type="button"
+                  className="password-toggle-btn"
+                  onClick={togglePasswordVisibility}  // Llamar la función para alternar visibilidad
+                  style={{
+                    position: 'absolute',
+                    top: '35px',
+                    right: '10px',
+                    background: 'transparent',  // Fondo transparente
+                    border: 'none',  // Eliminar bordes
+                    cursor: 'pointer',  // Cambiar el cursor a puntero
+                    padding: '0',  // Eliminar el relleno
+                  }}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}  {/* Ícono de ojo según el estado */}
+                </button>
               </div>
               <button type="submit" className="btn btn-primary w-100">Iniciar Sesión</button>
             </form>
@@ -111,10 +125,10 @@ const AuthPage = () => {
                   autoComplete="off"
                 />
               </div>
-              <div className="mb-3">
+              <div className="mb-3 position-relative">
                 <label htmlFor="register-password" className="form-label">Contraseña</label>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}  // Cambiar tipo según el estado
                   className="form-control"
                   id="register-password"
                   value={password}
@@ -123,6 +137,22 @@ const AuthPage = () => {
                   required
                   autoComplete="off"
                 />
+                <button
+                  type="button"
+                  className="password-toggle-btn"
+                  onClick={togglePasswordVisibility}  // Llamar la función para alternar visibilidad
+                  style={{
+                    position: 'absolute',
+                    top: '35px',
+                    right: '10px',
+                    background: 'transparent',  // Fondo transparente
+                    border: 'none',  // Eliminar bordes
+                    cursor: 'pointer',  // Cambiar el cursor a puntero
+                    padding: '0',  // Eliminar el relleno
+                  }}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}  {/* Ícono de ojo según el estado */}
+                </button>
               </div>
               <button type="submit" className="btn btn-primary w-100">Registrarse</button>
             </form>
