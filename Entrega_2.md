@@ -1,6 +1,11 @@
 # Entrega 2
 
 ## Alcances de la herramienta
+
+Neon Thread es una aplicación web de e-commerce orientada a la venta de artículos de moda con estética virtual y cyberpunk. Esta aplicación, mediante su interfaz de usuario atractiva e intuitiva y su capacidad de registro de usuarios, busca apelar a un nicho joven y apasionado por los futuros distópicos y la tecnología avanzada.
+
+Jenkins es un servidor de automatización de código abierto centrado principalmente a la Integración Continua (CI), el cuál debido a su interfaz de usuario intuitiva, su flexibilidad, su soporte de cientos de componentes adicionales y su amplia comunidad de usuarios, es usada por equipos de todos los tamaños en proyectos que usan múltiples tecnologías.
+
 ## Descripción del trabajo realizado
 
 ### Proyecto
