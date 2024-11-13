@@ -4,6 +4,7 @@
 ## Descripción del trabajo realizado
 
 ### Proyecto
+Se implemento panel de administrador para poder crear, leer, actualizar y eliminar los productos.
 
 ### Especificar dependencias entre la herramienta y la aplicación
 
@@ -28,3 +29,5 @@ Esta pipeline está configurada para actuar cada vez que se realiza un push a la
 Jenkins está enlazado con Github mediante un Webhook, lo cuál permite la comunicación entre el repositorio en Github y Jenkins mediante la url pública de Ngrok. Además, Jenkins está enlazado a Slack, de forma que después de ejecutar los pasos anteriormente mencionados, se envia un mensaje al chat #moda-virtual-neon-threads, donde menciona el estado, id y url del proceso ejecutado del pipeline.
 
 ## Problemas encontrados y soluciones
+• Error al crear cuentas de admin que no eran reconocidad por el sistema de token
+Solución: modificar las logica de los tokens para que consideraran el campo isAdmin al momento de validar el token, ademas de agregar un nuevo middleware que es exclusivo para autorizaradministradores.
