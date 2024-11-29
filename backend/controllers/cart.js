@@ -65,34 +65,44 @@ exports.removeFromCart = async (req, res) => {
   }
 };
 
-// Completar la compra
+// /controllers/cart.js
 exports.checkout = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.user.id }).populate('items.product');
-    if (!cart || cart.items.length === 0) {
-      return res.status(400).json({ message: 'El carrito está vacío' });
-    }
+      const cart = await Cart.findOne({ user: req.user.id }).populate('items.product');
+      if (!cart || cart.items.length === 0) {
+          return res.status(400).json({ message: 'El carrito está vacío' });
+      }
 
-    const currentDate = new Date(); // Fecha actual
+      const currentDate = new Date();
 
-    // Guardar cada item del carrito en el historial
-    cart.items.forEach(async (item) => {
-      const history = new History({
-        nameProduct: item.product.name,         // Usar el nombre del producto del modelo poblado
-        userBuyer: cart.user,
-        datePurchase: currentDate,
-        quantityProduct: item.quantity,
-      });
-      await history.save();
-    });
+      // Iterar sobre los items del carrito
+      for (const item of cart.items) {
+          // Registrar en el historial
+          const history = new History({
+              nameProduct: item.product.name,
+              userBuyer: cart.user,
+              datePurchase: currentDate,
+              quantityProduct: item.quantity,
+          });
+          await history.save();
 
-    // Vaciar el carrito después de completar la compra
-    cart.items = [];
-    await cart.save();
+          // Actualizar el stock del producto
+          const product = await Product.findById(item.product._id);
+          if (product.stock < item.quantity) {
+              return res.status(400).json({ message: `No hay suficiente stock para el producto ${product.name}` });
+          }
+          product.stock -= item.quantity;
+          await product.save();
+      }
 
-    res.json({ message: 'Compra completada con éxito' });
+      // Vaciar el carrito
+      cart.items = [];
+      await cart.save();
+
+      res.json({ message: 'Compra completada con éxito' });
   } catch (error) {
-    console.error('Error al completar la compra:', error);
-    res.status(500).json({ message: 'Error al completar la compra' });
+      console.error('Error al completar la compra:', error);
+      res.status(500).json({ message: 'Error al completar la compra' });
   }
 };
+

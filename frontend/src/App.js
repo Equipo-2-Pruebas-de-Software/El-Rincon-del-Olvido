@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminRouter from './components/AdminRouter';
@@ -13,29 +12,34 @@ import Footer from './components/Footer';
 import AdminDashboard from './components/AdminDashboard';
 import AdminProductEdit from './components/AdminProductEdit';
 import { UserProvider } from './context/UserContext';
-
+import CreateAdminUser from './components/CreateAdminUser';
+import './App.css'; // Importar el archivo de estilos
+import AdminProductCreate from './components/AdminProductCreate';
 function App() {
   return (
     <UserProvider>
       <Router>
-        <Header />
-        <main style={{ paddingBottom: '50px' }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/productos" element={<ProductsPage />} />
-            <Route path="/producto/:id" element={<ProductDetail />} />
-            <Route path="/login" element={<AuthPage />} />
-            <Route path="/carrito" element={<CartPage />} />
-            <Route path="/busqueda-avanzada" element={<AdvancedSearch />} />
-
-            {/* Rutas protegidas para el administrador */}
-            <Route element={<AdminRouter />}>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/product/:id" element={<AdminProductEdit />} />
-            </Route>
-          </Routes>
-        </main>
-        <Footer />
+        <div className="app-container">
+          <Header />
+          <main className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/productos" element={<ProductsPage />} />
+              <Route path="/producto/:id" element={<ProductDetail />} />
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="/carrito" element={<CartPage />} />
+              <Route path="/busqueda-avanzada" element={<AdvancedSearch />} />
+              <Route path="/crear-admin" element={<CreateAdminUser />} />
+              {/* Rutas protegidas para el administrador */}
+              <Route element={<AdminRouter />}>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/create-product" element={<AdminProductCreate />} />
+                <Route path="/admin/product/:id" element={<AdminProductEdit />} />
+              </Route>
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </Router>
     </UserProvider>
   );

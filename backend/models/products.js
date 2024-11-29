@@ -34,6 +34,11 @@ const Product = new Schema({
     availableSizes: {
         type: [String],
         required: false
+    },
+    stock: {
+        type: Number,
+        required: true,
+        default: 0
     }
 }, { timestamps: true }); // Opcional: agrega timestamps para createdAt y updatedAt
 

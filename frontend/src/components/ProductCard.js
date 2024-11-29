@@ -54,12 +54,18 @@ const ProductCard = ({ productoId }) => {
             <p className="card-text">
               <i className="fas fa-tag price-icon"></i>
               <span className="price" style={{ marginRight: '2px' }}>{formatPrice(producto.price)}</span>
-              <span className="badge badge-custom">{(producto.discount * 100).toFixed(0)}%</span> {/* Descuento en porcentaje */}
+              <span className="badge badge-custom">{(producto.discount).toFixed(0)}%</span> {/* Descuento en porcentaje */}
             </p>
           </div>
         </Link>
         <div className="card-footer">
           <small><del>{formatPrice(producto.originalPrice)}</del></small>
+          &nbsp;
+          {producto.stock > 0 ? (
+            <small>{producto.stock} unidades</small>
+            ) : (
+            <small className="text-danger">Agotado</small>
+          )}
         </div>
       </div>
     </div>

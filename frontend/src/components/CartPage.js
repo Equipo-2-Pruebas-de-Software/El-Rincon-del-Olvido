@@ -60,6 +60,10 @@ const CartPage = () => {
     }
   };
 
+  const calculateTotal = () => {
+    return cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+};
+
   // Función para proceder al pago
   const handleCheckout = async () => {
     try {
@@ -122,10 +126,10 @@ const CartPage = () => {
       </div>
 
       {cartItems.length > 0 && (
-        <div className="cart-total">
-          <h4>Total: ${total.toLocaleString()}</h4>
-          <button className="btn btn-primary w-100" onClick={handleCheckout}>Proceder al pago</button>
-        </div>
+            <div className="cart-total">
+                <h4>Total: ${calculateTotal().toLocaleString()}</h4>
+                <button className="btn btn-primary w-100" onClick={handleCheckout}>Proceder al pago</button>
+            </div>
       )}
     </div>
   );
