@@ -10,7 +10,11 @@ const cors = require('cors')
 // Middlewares
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
-app.use(cors())
+app.use(cors({
+  origin: PORT, // Cambia esto al dominio de tu frontend en producción
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+  credentials: true, // Permitir envío de cookies o encabezados de autenticación
+}));
 
 // Cargar las rutas
 const authRoutes = require('./routes/auth.routes'); // Descomentar autenticación
