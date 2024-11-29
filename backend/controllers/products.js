@@ -1,31 +1,53 @@
 const Product = require('../models/products');
 
-// Crear un nuevo producto
+// controllers/products.js
+
 const createProduct = async (req, res) => {
-  try {
-    const { name, description, price, discount, originalPrice, availableSizes, category, image } =
-      req.body;
-    console.log('Creando un nuevo producto:', { name, category, price }); // Log de creación
+    try {
+        const {
+        name,
+        description,
+        price,
+        discount,
+        originalPrice,
+        availableSizes,
+        category,
+        stock,
+        } = req.body;
 
-    const newProduct = new Product({
-      name,
-      description,
-      price,
-      discount,
-      originalPrice,
-      availableSizes,
-      category,
-      image, // Aquí se incluye la imagen en base64
-    });
+        // Procesar availableSizes si es un string
+        let sizes = availableSizes;
+        if (typeof availableSizes === 'string') {
+        sizes = JSON.parse(availableSizes);
+        }
 
-    const savedProduct = await newProduct.save();
-    console.log('Producto creado con éxito:', savedProduct); // Log de éxito
-    res.status(201).json(savedProduct); // Devolver el producto creado, incluyendo el _id
-  } catch (error) {
-    console.error('Error al crear el producto:', error); // Log de error
-    res.status(500).json({ message: 'Error al crear el producto', error });
-  }
+        // Procesar la imagen
+        let imageData = null;
+        if (req.file) {
+        imageData = req.file.buffer.toString('base64');
+        }
+
+        const newProduct = new Product({
+        name,
+        description,
+        price,
+        discount,
+        originalPrice,
+        availableSizes: sizes,
+        category,
+        stock,
+        image: imageData,
+        });
+
+        const savedProduct = await newProduct.save();
+        res.status(201).json(savedProduct);
+        
+    } catch (error) {
+        console.error('Error al crear el producto:', error);
+        res.status(500).json({ message: 'Error al crear el producto', error });
+    }
 };
+  
 
 // Obtener todos los productos
 const getProducts = async (req, res) => {
@@ -55,28 +77,65 @@ const getProductById = async (req, res) => {
   }
 };
 
-// Actualizar un producto
+// controllers/products.js
+
 const updateProduct = async (req, res) => {
-  try {
-    console.log(`Actualizando producto con ID: ${req.params.id}`); // Log de actualización
-    const { name, description, price, discount, originalPrice, availableSizes, category, image } =
-      req.body;
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      { name, description, price, discount, originalPrice, availableSizes, category, image },
-      { new: true } // Para devolver el producto actualizado
-    );
-    if (!updatedProduct) {
-      console.warn(`Producto no encontrado para actualizar con ID: ${req.params.id}`); // Log de advertencia
-      return res.status(404).json({ message: 'Producto no encontrado' });
+    try {
+      const {
+        name,
+        description,
+        price,
+        discount,
+        originalPrice,
+        availableSizes,
+        category,
+        stock,
+      } = req.body;
+  
+      // Procesar availableSizes si es un string
+      let sizes = availableSizes;
+      if (typeof availableSizes === 'string') {
+        sizes = JSON.parse(availableSizes);
+      }
+  
+      // Procesar la imagen
+      let imageData = null;
+      if (req.file) {
+        imageData = req.file.buffer.toString('base64');
+      }
+  
+      const updatedData = {
+        name,
+        description,
+        price,
+        discount,
+        originalPrice,
+        availableSizes: sizes,
+        category,
+        stock,
+      };
+  
+      if (imageData) {
+        updatedData.image = imageData;
+      }
+  
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        updatedData,
+        { new: true }
+      );
+  
+      if (!updatedProduct) {
+        return res.status(404).json({ message: 'Producto no encontrado' });
+      }
+  
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+      console.error('Error al actualizar el producto:', error);
+      res.status(500).json({ message: 'Error al actualizar el producto', error });
     }
-    console.log('Producto actualizado con éxito:', updatedProduct); // Log de éxito
-    res.status(200).json(updatedProduct);
-  } catch (error) {
-    console.error('Error al actualizar el producto:', error); // Log de error
-    res.status(500).json({ message: 'Error al actualizar el producto', error });
-  }
 };
+  
 
 // Eliminar un producto
 const deleteProduct = async (req, res) => {

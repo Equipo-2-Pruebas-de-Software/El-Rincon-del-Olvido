@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import UserContext from '../context/UserContext';
+// src/components/ProductDetail.js
+import axios from 'axios';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -87,6 +88,7 @@ const ProductDetail = () => {
     }
   };
 
+
   if (!producto) {
     return <p>Producto no encontrado.</p>;
   }
@@ -121,11 +123,9 @@ const ProductDetail = () => {
           </p>
           <p className="mt-3"><strong>Precio:</strong> ${producto.price?.toLocaleString('es-ES')}</p>
           <p><strong>Descuento:</strong> {(producto.discount * 100).toFixed(0)}%</p>
-          <p><strong>Precio Original:</strong> <del>${producto.originalPrice?.toLocaleString('es-ES')}</del></p>
-
-          <p>
-            <strong>Tallas Disponibles:</strong>
-          </p>
+          <p><strong>Precio Original:</strong> <del>${producto.originalPrice.toLocaleString('es-ES')}</del></p>
+          <p><strong>Stock disponible:</strong> {producto.stock} unidades</p>
+          <p><strong>Tallas Disponibles:</strong></p>
           <ul>
             {producto.availableSizes?.map((talla) => (
               <li key={talla}>{talla}</li>
@@ -145,9 +145,12 @@ const ProductDetail = () => {
             />
           </div>
 
-          {/* Botón para agregar al carrito */}
-          <button className="btn btn-primary" onClick={handleAddToCart}>
-            Agregar al Carrito
+          <button
+              className="btn btn-primary"
+              onClick={handleAddToCart}
+              disabled={producto.stock === 0}
+          >
+              {producto.stock === 0 ? 'Agotado' : 'Agregar al Carrito'}
           </button>
         </div>
       </div>

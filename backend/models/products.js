@@ -51,6 +51,11 @@ const Product = new Schema(
       default: 0,
       required: true,
     },
+    stock: {
+      type: Number,
+      required: true,
+      default: 0
+  }
   },
   { timestamps: true }
 );

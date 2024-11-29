@@ -32,13 +32,22 @@ const AdminDashboard = () => {
     };
 
     const deleteHandler = async (id) => {
+        const confirmDelete = window.confirm('¿Estás seguro de eliminar este producto?');
+        if (!confirmDelete) return;
+      
         try {
-            const res = await axios.delete(`http://localhost:5000/api/${id}`);
+          const token = localStorage.getItem('token');
+          await axios.delete(`http://localhost:5000/api/products/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setProductsList(productsList.filter((product) => product._id !== id));
         } catch (err) {
-            setErrorMsg('Error al eliminar el prodcuto');
+          setErrorMsg('Error al eliminar el producto');
         }
     };
-
+      
     const reporteHandler = async () => {
         try {
             const res = await axios.post(`http://localhost:5000/api/add-report`);
@@ -49,101 +58,86 @@ const AdminDashboard = () => {
     }
     
     const fetchData = async () => {
-        try{
-            setLoading(true);
-
-            const products = await axios.get('http://localhost:5000/api/');
-            setProductsList(products.data);
-
-            setLoading(false);
+        try {
+          setLoading(true);
+          const products = await axios.get('http://localhost:5000/api/products');
+          setProductsList(products.data);
         } catch (err) {
-            setErrorMsg('Error al obtener los productos');
+          setErrorMsg('Error al obtener los productos');
+        } finally {
+          setLoading(false);
         }
-    }
+    };
+      
+
+    
 
     useEffect(() => {
         fetchData();
     }, []);
     
+    // AdminDashboard.js
+
     return (
-        <div>
-            <h1>Panel de Admin</h1>
-
-            <div className='col-md-2 text-end'>
-                <button id={'create'}className='btn-sm m-3' onClick={createProductHandler}>
-                    <FaEdit /> Crear Producto
-                </button>
-            </div>
-
-            {
-                loading
-                    ?(<h2>Cargando</h2>)
-                
-                : productsList
-                    ?(
-                        <>
-                            <h2>{errorMsg}</h2>
-                            <table>
-
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>NOMBRE</th>
-                                        <th>DESCRIPCION</th>
-                                        <th>CATEGORIA</th>
-                                        <th>PRECIO</th>
-                                        <th>DESCUENTO</th>
-                                        <th>PRECIO ORIGINAL</th>
-                                        <th>IMAGEN</th>
-                                        <th>TAMAÑO DISPONIBLES</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {productsList.map((product, index) => (
-                                        <tr key={product._id}>
-                                            <td>{product._id}</td>
-                                            <td>{product.name}</td>
-                                            <td>{product.description}</td>
-                                            <td>{product.category}</td>
-                                            <td>{product.price}</td>
-                                            <td>{product.discount}</td>
-                                            <td>{product.originalPrice}</td>
-                                            <td>{product.image}</td>
-                                            <td>{product.availableSizes}</td>
-                                            <td>
-                                                <button id={`edit-${index}`} className="btn-sm mx-2" onClick={() => navigate(`/admin/product/${product._id}`)}>
-                                                    <FaEdit />
-                                                </button>
-                                                <button id={`delete-${index}`} className='btn-sm' onClick={() => deleteHandler(product._id)}>
-                                                    <FaTrash style={{ color: 'white' }}/>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-
-                            </table>
-                        </>
-                    )
-                    
-                :(<h2>Ningun producto creado</h2>)
-            }
-
-            <div className='col-md-2 text-end'>
-                <button id='create-report' className='btn-sm m-3' onClick={reporteHandler}>
-                    Crear Reporte
-                </button>
-                {
-                    reporte
-                        ? (<p>{reporte}</p>)
-                    : (<></>)
-                }
-            </div>
-
-        </div>
-    )
+    <div className="container mt-5">
+      <h1>Panel de Administración</h1>
+  
+      <div className="mb-4 text-end">
+        <button
+          id="create"
+          className="btn btn-primary"
+          onClick={() => navigate('/admin/create-product')}
+        >
+          <FaEdit /> Crear Producto
+        </button>
+      </div>
+  
+      {loading ? (
+        <h2>Cargando...</h2>
+      ) : productsList.length > 0 ? (
+        <>
+          {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>NOMBRE</th>
+                <th>CATEGORÍA</th>
+                <th>PRECIO</th>
+                <th>STOCK</th>
+                <th>ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productsList.map((product) => (
+                <tr key={product._id}>
+                  <td>{product.name}</td>
+                  <td>{product.category}</td>
+                  <td>${product.price}</td>
+                  <td>{product.stock}</td>
+                  <td>
+                    <button
+                      className="btn btn-sm btn-warning me-2"
+                      onClick={() => navigate(`/admin/product/${product._id}`)}
+                    >
+                      <FaEdit /> Editar
+                    </button>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => deleteHandler(product._id)}
+                    >
+                      <FaTrash /> Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      ) : (
+        <h2>No hay productos creados</h2>
+      )}
+    </div>
+  ); 
 }
 
 export default AdminDashboard
