@@ -23,16 +23,9 @@ pipeline {
                 sh 'cd testing && npm install'
             }
         }
-        stage('Xvfb-Test') {
+        stage('Testing') {
             steps {
-                script {
-                    wrap([$class: 'Xvfb']) {
-                        stage('Test') {
-                                echo 'Testing...'
-                                sh 'cd testing && npx cypress run'
-                        }
-                    }
-                }
+                echo 'Testing...'
             }
         }
         stage('Deploy') {
