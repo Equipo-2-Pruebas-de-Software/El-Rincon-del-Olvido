@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import AdminDashboard from './components/AdminDashboard';
 import AdminProductEdit from './components/AdminProductEdit';
 import { UserProvider } from './context/UserContext';
+import AdminReport from './components/AdminReport';
+
 import CreateAdminUser from './components/CreateAdminUser';
 import './App.css'; // Importar el archivo de estilos
 import AdminProductCreate from './components/AdminProductCreate';
@@ -29,6 +31,7 @@ function App() {
               <Route path="/login" element={<AuthPage />} />
               <Route path="/carrito" element={<CartPage />} />
               <Route path="/busqueda-avanzada" element={<AdvancedSearch />} />
+              <Route path="/admin/reporte" element={<AdminReport />} />
               <Route path="/crear-admin" element={<CreateAdminUser />} />
               {/* Rutas protegidas para el administrador */}
               <Route element={<AdminRouter />}>
