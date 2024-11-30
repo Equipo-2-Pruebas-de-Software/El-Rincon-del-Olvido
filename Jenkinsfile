@@ -4,11 +4,11 @@ pipeline {
         nodejs 'nodejs'
     }
     environment {
-        // Define variables de entorno necesarias
         CHROME_BIN = '/usr/bin/google-chrome'
-        // Asegura que /usr/local/bin esté en el PATH
+        SELENIUM_CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
         PATH = "${env.PATH}:/usr/local/bin"
     }
+
     stages {
         stage('Preparation') {
             steps {
@@ -58,6 +58,13 @@ pipeline {
                 sh 'chromedriver --version'
                 sh 'node -v'
                 sh 'google-chrome --version'
+            }
+        }
+        stage('Print Environment Variables') {
+            steps {
+                sh 'echo $CHROME_BIN'
+                sh 'echo $SELENIUM_CHROMEDRIVER_PATH'
+                sh 'echo $PATH'
             }
         }
         stage('Run Selenium Tests') {

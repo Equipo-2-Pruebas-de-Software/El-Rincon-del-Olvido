@@ -1,7 +1,15 @@
 const { Builder, By, until } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 
 (async function registerTest() {
-  let driver = await new Builder().forBrowser('chrome').build(); // No es necesario especificar el chromedriver aquí
+  let serviceBuilder = new chrome.ServiceBuilder('/usr/local/bin/chromedriver');
+  let options = new chrome.Options();
+
+  let driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(options)
+    .setChromeService(serviceBuilder)
+    .build(); // No es necesario especificar el chromedriver aquí
 
   try {
     // Navegar a la página de autenticación (login)
