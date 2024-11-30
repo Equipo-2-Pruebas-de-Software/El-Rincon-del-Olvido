@@ -36,24 +36,16 @@ pipeline {
                 '''
             }
         }
-        stage('Setup Selenium Environment') {
+        stage('Initialize App') {
             steps {
-                echo 'Instalando Google Chrome y chromedriver...'
+                echo 'Inicializando backend y frontend'
                 sh '''
-                    # Actualizar el sistema
-                    sudo apt-get update
-                    # Instalar Google Chrome
-                    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-                    sudo apt install -y ./google-chrome-stable_current_amd64.deb
-                    # Instalar chromedriver
-                    CHROME_VERSION=$(google-chrome --version | grep -oP '\\d+\\.\\d+\\.\\d+')
-                    CHROMEDRIVER_VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
-                    wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
-                    unzip chromedriver_linux64.zip
-                    sudo mv chromedriver /usr/local/bin/
-                    sudo chmod +x /usr/local/bin/chromedriver
-                    # Limpiar archivos descargados
-                    rm google-chrome-stable_current_amd64.deb chromedriver_linux64.zip
+                    cd backend
+                    npm run start
+                '''
+                sh '''
+                    cd frontend
+                    npm run start
                 '''
             }
         }
@@ -61,9 +53,9 @@ pipeline {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
                 sh '''
-                    export DISPLAY=:99
-                    Xvfb :99 -ac &
                     node selenium/register.test.js
+                    node selenium/login.test.js
+                    node selenium/cart.test.js
                 '''
             }
         }
