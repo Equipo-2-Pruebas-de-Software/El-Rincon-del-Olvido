@@ -64,7 +64,7 @@ pipeline {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
                 sh '''
-                    cd testing
+                    cd selenium
                     node selenium/register.test.js
                     node selenium/login.test.js
                     node selenium/cart.test.js
