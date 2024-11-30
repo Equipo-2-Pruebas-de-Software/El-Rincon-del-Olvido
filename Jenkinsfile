@@ -21,19 +21,18 @@ pipeline {
                 git branch: 'develop', url: 'https://github.com/Equipo-2-Pruebas-de-Software/Moda-Virtual-Neon-Threads.git'
             }
         }
-        stage('Diagnóstico') {
+        stage('Initialize App') {
             steps {
-                echo 'Ejecutando diagnóstico...'
+                echo 'Inicializando backend y frontend...'
                 sh '''#!/bin/bash
                     set -x
-                    echo "Versión de Node.js:"
-                    node -v
-                    echo "Variables de entorno:"
-                    printenv
-                    echo "Directorio actual:"
-                    pwd
-                    echo "Lista de archivos en el nivel raíz:"
-                    ls -la
+                    cd backend
+                    npm install
+                    nohup npm start &
+                    cd ../frontend
+                    npm install
+                    nohup npm start &
+                    sleep 10
                 '''
             }
         }
@@ -42,13 +41,8 @@ pipeline {
                 echo 'Instalando dependencias de Selenium...'
                 sh '''#!/bin/bash
                     set -x
-                    if [ -d selenium ]; then
-                        cd selenium
-                        npm install
-                    else
-                        echo "Directorio selenium no encontrado."
-                        exit 1
-                    fi
+                    cd selenium
+                    npm install
                 '''
             }
         }
@@ -65,16 +59,6 @@ pipeline {
                 '''
             }
         }
-        stage('Print Environment Variables') {
-            steps {
-                sh '''#!/bin/bash
-                    set -x
-                    echo "CHROME_BIN: $CHROME_BIN"
-                    echo "SELENIUM_CHROMEDRIVER_PATH: $SELENIUM_CHROMEDRIVER_PATH"
-                    echo "PATH: $PATH"
-                '''
-            }
-        }
         stage('Run Selenium Tests') {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
@@ -88,7 +72,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Desplegando la aplicación...'
-                // Aquí puedes agregar tus pasos de despliegue
+                // Pasos de despliegue si es necesario
             }
         }
     }
