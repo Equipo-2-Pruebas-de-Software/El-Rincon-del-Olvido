@@ -49,12 +49,6 @@ pipeline {
                 '''
             }
         }
-        stage('Check Selenium Setup') {
-            steps {
-                sh 'chromedriver --version'
-                sh 'node -v'
-            }
-        }
         stage('Run Selenium Tests') {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
