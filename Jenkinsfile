@@ -41,11 +41,11 @@ pipeline {
                 echo 'Inicializando backend y frontend'
                 sh '''
                     cd backend
-                    npm run start
+                    nohup npm run start
                 '''
                 sh '''
                     cd frontend
-                    npm run start
+                    nohup npm run start
                 '''
             }
         }
