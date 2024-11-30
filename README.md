@@ -2,7 +2,7 @@
 
 ## Videos de cada entrega
 
-1. [Entrega 1](Presentacion_Neon-Threads.mp4)
+1. [Entrega 1](https://raw.githubusercontent.com/Equipo-2-Pruebas-de-Software/Moda-Virtual-Neon-Threads/refs/heads/main/Presentacion_Neon-Threads.mp4)
 2. [Entrega 2](https://drive.google.com/file/d/1BSTgOUXwF-VgWTKtGSBEefn4VNNKP0Ql/view?usp=sharing)
 3. [Entrega 3]()
 
