@@ -4,8 +4,10 @@ pipeline {
         nodejs 'nodejs'
     }
     environment {
-        // Define variables de entorno si es necesario
+        // Define variables de entorno necesarias
         CHROME_BIN = '/usr/bin/google-chrome'
+        // Asegura que /usr/local/bin esté en el PATH
+        PATH = "${env.PATH}:/usr/local/bin"
     }
     stages {
         stage('Preparation') {
@@ -41,18 +43,28 @@ pipeline {
                 echo 'Inicializando backend y frontend'
                 sh '''
                     cd backend
-                    npm run start
+                    nohup npm run start &
                 '''
                 sh '''
                     cd frontend
-                    npm run start
+                    nohup npm run start &
                 '''
+                // Espera unos segundos para asegurar que los servicios estén iniciados
+                sh 'sleep 10'
+            }
+        }
+        stage('Check Selenium Setup') {
+            steps {
+                sh 'chromedriver --version'
+                sh 'node -v'
+                sh 'google-chrome --version'
             }
         }
         stage('Run Selenium Tests') {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
                 sh '''
+                    cd testing
                     node selenium/register.test.js
                     node selenium/login.test.js
                     node selenium/cart.test.js
