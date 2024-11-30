@@ -8,17 +8,20 @@ const chrome = require('selenium-webdriver/chrome');
   let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
   try {
-    // Navegar a la página de autenticación (login)
+    console.log('Navegando a la página de login...');
     await driver.get('http://localhost:3000/login');
     await driver.sleep(1000);
-    // Esperar a que la página cargue completamente
+
+    console.log('Esperando a que el botón esté disponible...');
     await driver.wait(until.elementLocated(By.css('button.btn-link')), 5000);
     await driver.sleep(1000);
-    // Completar formulario de registro
+
+    console.log('Completando el formulario de login...');
     await driver.findElement(By.id('login-email')).sendKeys('testuser@example.com');
     await driver.findElement(By.id('login-password')).sendKeys('TestPassword123');
     await driver.sleep(1000);
-    // Hacer clic en el botón de enviar (login)
+
+    console.log('Haciendo clic en el botón de login...');
     await driver.findElement(By.css('button[type="submit"]')).click();
     await driver.sleep(1000);
     // Esperar la redirección o confirmación

@@ -5,8 +5,8 @@ pipeline {
     }
     environment {
         CHROME_BIN = '/usr/bin/google-chrome'
-        SELENIUM_CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
-        PATH = "${env.PATH}:/usr/local/bin"
+        SELENIUM_CHROMEDRIVER_PATH = './selenium/chromedriver'
+        PATH = "${env.PATH}:/usr/local/bin:./selenium"
     }
 
     stages {
@@ -23,17 +23,25 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                echo 'Instalando dependencias del backend, frontend y testing...'
-                sh '''
+                echo 'Inicializando backend y frontend...'
+                sh '''#!/bin/bash
+                    set -x
                     cd backend
                     npm install
-                '''
-                sh '''
-                    cd frontend
+                    nohup npm start &
+                    cd ../frontend
                     npm install
+                    nohup npm start &
+                    sleep 10
                 '''
-                sh '''
-                    cd testing
+            }
+        }
+        stage('Install Selenium Dependencies') {
+            steps {
+                echo 'Instalando dependencias de Selenium...'
+                sh '''#!/bin/bash
+                    set -x
+                    cd selenium
                     npm install
                 '''
             }
@@ -65,8 +73,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
-                // Aquí puedes agregar tus pasos de despliegue
+                echo 'Desplegando la aplicación...'
+                // Pasos de despliegue si es necesario
             }
         }
     }
