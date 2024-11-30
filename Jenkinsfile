@@ -23,9 +23,9 @@ pipeline {
                 sh 'cd testing && npm install'
             }
         }
-        stage('Testing') {
+        stage('Run Selenium Tests') {
             steps {
-                echo 'Testing...'
+                sh 'node selenium/register.test.js'
             }
         }
         stage('Deploy') {
