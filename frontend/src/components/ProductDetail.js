@@ -88,7 +88,6 @@ const ProductDetail = () => {
     }
   };
 
-
   if (!producto) {
     return <p>Producto no encontrado.</p>;
   }
@@ -121,11 +120,22 @@ const ProductDetail = () => {
             <strong>Precio Original:</strong>{' '}
             <del>${producto.originalPrice.toLocaleString('es-ES')}</del>
           </p>
-          <p className="mt-3"><strong>Precio:</strong> ${producto.price?.toLocaleString('es-ES')}</p>
-          <p><strong>Descuento:</strong> {(producto.discount * 100).toFixed(0)}%</p>
-          <p><strong>Precio Original:</strong> <del>${producto.originalPrice.toLocaleString('es-ES')}</del></p>
-          <p><strong>Stock disponible:</strong> {producto.stock} unidades</p>
-          <p><strong>Tallas Disponibles:</strong></p>
+          <p className="mt-3">
+            <strong>Precio:</strong> ${producto.price?.toLocaleString('es-ES')}
+          </p>
+          <p>
+            <strong>Descuento:</strong> {(producto.discount * 100).toFixed(0)}%
+          </p>
+          <p>
+            <strong>Precio Original:</strong>{' '}
+            <del>${producto.originalPrice.toLocaleString('es-ES')}</del>
+          </p>
+          <p>
+            <strong>Stock disponible:</strong> {producto.stock} unidades
+          </p>
+          <p>
+            <strong>Tallas Disponibles:</strong>
+          </p>
           <ul>
             {producto.availableSizes?.map((talla) => (
               <li key={talla}>{talla}</li>
@@ -134,7 +144,9 @@ const ProductDetail = () => {
 
           {/* Selector de cantidad */}
           <div className="mb-3">
-            <label htmlFor="quantity" className="form-label">Cantidad:</label>
+            <label htmlFor="quantity" className="form-label">
+              Cantidad:
+            </label>
             <input
               type="number"
               id="quantity"
@@ -146,11 +158,12 @@ const ProductDetail = () => {
           </div>
 
           <button
-              className="btn btn-primary"
-              onClick={handleAddToCart}
-              disabled={producto.stock === 0}
+            className="btn btn-primary"
+            onClick={handleAddToCart}
+            disabled={producto.stock === 0}
+            id="addToCartButton"
           >
-              {producto.stock === 0 ? 'Agotado' : 'Agregar al Carrito'}
+            {producto.stock === 0 ? 'Agotado' : 'Agregar al Carrito'}
           </button>
         </div>
       </div>
