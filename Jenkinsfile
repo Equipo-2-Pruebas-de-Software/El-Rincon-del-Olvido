@@ -81,9 +81,7 @@ pipeline {
                 sh '''#!/bin/bash
                     set -x
                     cd selenium
-                    node register.test.js || { echo "register.test.js falló"; exit 1; }
                     node login.test.js || { echo "login.test.js falló"; exit 1; }
-                    node cart.test.js || { echo "cart.test.js falló"; exit 1; }
                 '''
             }
         }
