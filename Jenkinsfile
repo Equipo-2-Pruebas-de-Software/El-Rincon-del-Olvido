@@ -21,42 +21,54 @@ pipeline {
                 git branch: 'develop', url: 'https://github.com/Equipo-2-Pruebas-de-Software/Moda-Virtual-Neon-Threads.git'
             }
         }
-        /*stage('Install Dependencies') {
+        stage('Diagnóstico') {
+            steps {
+                echo 'Ejecutando diagnóstico...'
+                sh '''#!/bin/bash
+                    set -x
+                    echo "Versión de Node.js:"
+                    node -v
+                    echo "Variables de entorno:"
+                    printenv
+                    echo "Directorio actual:"
+                    pwd
+                    echo "Lista de archivos:"
+                    ls -la
+                '''
+            }
+        }
+        stage('Install Dependencies') {
             steps {
                 echo 'Instalando dependencias del backend, frontend y testing...'
-                sh '''
+                sh '''#!/bin/bash
+                    set -x
                     cd backend
                     npm install
-                '''
-                sh '''
-                    cd frontend
+                    cd ../frontend
                     npm install
-                '''
-                sh '''
-                    cd testing
+                    cd ../testing
                     npm install
                 '''
             }
         }
         stage('Initialize App') {
             steps {
-                echo 'Inicializando backend y frontend'
-                sh '''
+                echo 'Inicializando backend y frontend...'
+                sh '''#!/bin/bash
+                    set -x
                     cd backend
                     nohup npm run start &
-                '''
-                sh '''
-                    cd frontend
+                    cd ../frontend
                     nohup npm run start &
                 '''
                 // Espera unos segundos para asegurar que los servicios estén iniciados
                 sh 'sleep 10'
             }
-        } */
+        }
         stage('Check Selenium Setup') {
             steps {
-                // Añadir chromedriver al PATH
-                sh '''
+                sh '''#!/bin/bash
+                    set -x
                     export PATH=$PATH:$(pwd)/selenium
                     echo "PATH actualizado: $PATH"
                     chromedriver --version
@@ -67,15 +79,19 @@ pipeline {
         }
         stage('Print Environment Variables') {
             steps {
-                sh 'echo $CHROME_BIN'
-                sh 'echo $SELENIUM_CHROMEDRIVER_PATH'
-                sh 'echo $PATH'
+                sh '''#!/bin/bash
+                    set -x
+                    echo "CHROME_BIN: $CHROME_BIN"
+                    echo "SELENIUM_CHROMEDRIVER_PATH: $SELENIUM_CHROMEDRIVER_PATH"
+                    echo "PATH: $PATH"
+                '''
             }
         }
         stage('Run Selenium Tests') {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
-                sh '''
+                sh '''#!/bin/bash
+                    set -x
                     export PATH=$PATH:$(pwd)/selenium
                     cd selenium
                     node register.test.js
@@ -86,7 +102,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
+                echo 'Desplegando la aplicación...'
                 // Aquí puedes agregar tus pasos de despliegue
             }
         }
