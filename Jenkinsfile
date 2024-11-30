@@ -5,8 +5,8 @@ pipeline {
     }
     environment {
         CHROME_BIN = '/usr/bin/google-chrome'
-        SELENIUM_CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
-        PATH = "${env.PATH}:/usr/local/bin"
+        SELENIUM_CHROMEDRIVER_PATH = './selenium/chromedriver'
+        PATH = "${env.PATH}:/usr/local/bin:./selenium"
     }
 
     stages {
@@ -32,43 +32,31 @@ pipeline {
                     printenv
                     echo "Directorio actual:"
                     pwd
-                    echo "Lista de archivos:"
+                    echo "Lista de archivos en el nivel raíz:"
                     ls -la
                 '''
             }
         }
-        stage('Install Dependencies') {
+        stage('Install Selenium Dependencies') {
             steps {
-                echo 'Instalando dependencias del backend, frontend y testing...'
+                echo 'Instalando dependencias de Selenium...'
                 sh '''#!/bin/bash
                     set -x
-                    cd backend
-                    npm install
-                    cd ../frontend
-                    npm install
-                    cd ../testing
-                    npm install
+                    if [ -d selenium ]; then
+                        cd selenium
+                        npm install
+                    else
+                        echo "Directorio selenium no encontrado."
+                        exit 1
+                    fi
                 '''
-            }
-        }
-        stage('Initialize App') {
-            steps {
-                echo 'Inicializando backend y frontend...'
-                sh '''#!/bin/bash
-                    set -x
-                    cd backend
-                    nohup npm run start &
-                    cd ../frontend
-                    nohup npm run start &
-                '''
-                // Espera unos segundos para asegurar que los servicios estén iniciados
-                sh 'sleep 10'
             }
         }
         stage('Check Selenium Setup') {
             steps {
                 sh '''#!/bin/bash
                     set -x
+                    chmod +x selenium/chromedriver
                     export PATH=$PATH:$(pwd)/selenium
                     echo "PATH actualizado: $PATH"
                     chromedriver --version
@@ -92,11 +80,10 @@ pipeline {
                 echo 'Ejecutando pruebas de Selenium...'
                 sh '''#!/bin/bash
                     set -x
-                    export PATH=$PATH:$(pwd)/selenium
                     cd selenium
-                    node register.test.js
-                    node login.test.js
-                    node cart.test.js
+                    node register.test.js || { echo "register.test.js falló"; exit 1; }
+                    node login.test.js || { echo "login.test.js falló"; exit 1; }
+                    node cart.test.js || { echo "cart.test.js falló"; exit 1; }
                 '''
             }
         }
