@@ -1,7 +1,12 @@
 const { Builder, By, until, Key } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 
 (async function addToCartTest() {
-  let driver = await new Builder().forBrowser('chrome').build();
+  let options = new chrome.Options();
+  options.addArguments('--headless');
+
+  let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+
 
   try {
     // Navegar a la página de autenticación (login)

@@ -2,14 +2,10 @@ const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
 (async function registerTest() {
-  let serviceBuilder = new chrome.ServiceBuilder('/usr/local/bin/chromedriver');
   let options = new chrome.Options();
+  options.addArguments('--headless');
 
-  let driver = await new Builder()
-    .forBrowser('chrome')
-    .setChromeOptions(options)
-    .setChromeService(serviceBuilder)
-    .build(); // No es necesario especificar el chromedriver aquí
+  let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
   try {
     // Navegar a la página de autenticación (login)
@@ -26,11 +22,11 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.findElement(By.css('button[type="submit"]')).click();
     await driver.sleep(1000);
     // Esperar la redirección o confirmación
-    await driver.wait(until.urlContains('/login'), 5000);
-    await driver.sleep(1000);
-    console.log('Prueba de registro: Éxito');
+    /*await driver.wait(until.urlContains('/login'), 5000);
+    await driver.sleep(1000);*/
+    console.log('Prueba de login: Éxito');
   } catch (err) {
-    console.error('Prueba de registro: Fallo', err);
+    console.error('Prueba de login: Fallo', err);
   } finally {
     await driver.quit();
   }

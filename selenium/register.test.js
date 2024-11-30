@@ -3,21 +3,10 @@ const chrome = require('selenium-webdriver/chrome');
 
 (async function registerTest() {
   try {
-    // Configuración de Chrome Options para headless
     let options = new chrome.Options();
-    options.addArguments(
-      '--headless',               // Ejecuta Chrome sin interfaz gráfica
-      '--disable-gpu',            // Deshabilita el uso de GPU
-      '--no-sandbox',             // Requerido en algunos entornos como Docker
-      '--disable-dev-shm-usage',  // Evita problemas con recursos compartidos
-      '--window-size=1920,1080'   // Establece un tamaño fijo de ventana
-    );
+    options.addArguments('--headless');
 
-    // Construir el WebDriver
-    let driver = await new Builder()
-      .forBrowser('chrome')
-      .setChromeOptions(options)
-      .build();
+    let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
     try {
       // Navegar a la página de autenticación (login)

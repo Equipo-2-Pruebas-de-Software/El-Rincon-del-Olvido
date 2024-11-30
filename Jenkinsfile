@@ -21,7 +21,7 @@ pipeline {
                 git branch: 'develop', url: 'https://github.com/Equipo-2-Pruebas-de-Software/Moda-Virtual-Neon-Threads.git'
             }
         }
-        /*stage('Install Dependencies') {
+        stage('Install Dependencies') {
             steps {
                 echo 'Instalando dependencias del backend, frontend y testing...'
                 sh '''
@@ -52,35 +52,14 @@ pipeline {
                 // Espera unos segundos para asegurar que los servicios estén iniciados
                 sh 'sleep 10'
             }
-        } */
-        stage('Check Selenium Setup') {
-            steps {
-                // Añadir chromedriver al PATH
-                sh '''
-                    export PATH=$PATH:$(pwd)/selenium
-                    echo "PATH actualizado: $PATH"
-                    chromedriver --version
-                    node -v
-                    google-chrome --version
-                '''
-            }
-        }
-        stage('Print Environment Variables') {
-            steps {
-                sh 'echo $CHROME_BIN'
-                sh 'echo $SELENIUM_CHROMEDRIVER_PATH'
-                sh 'echo $PATH'
-            }
-        }
+        } 
         stage('Run Selenium Tests') {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
                 sh '''
-                    export PATH=$PATH:$(pwd)/selenium
                     cd selenium
-                    node register.test.js
-                    node login.test.js
-                    node cart.test.js
+                    npm install
+                    npm run test
                 '''
             }
         }
