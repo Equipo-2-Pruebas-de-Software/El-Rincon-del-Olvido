@@ -55,15 +55,21 @@ pipeline {
         } */
         stage('Check Selenium Setup') {
             steps {
-                sh 'chromedriver --version'
-                sh 'node -v'
-                sh 'google-chrome --version'
+                // Añadir chromedriver al PATH
+                sh '''
+                    export PATH=$PATH:$(pwd)/selenium
+                    echo "PATH actualizado: $PATH"
+                    chromedriver --version
+                    node -v
+                    google-chrome --version
+                '''
             }
         }
         stage('Run Selenium Tests') {
             steps {
                 echo 'Ejecutando pruebas de Selenium...'
                 sh '''
+                    export PATH=$PATH:$(pwd)/selenium
                     cd selenium
                     node register.test.js
                     node login.test.js
