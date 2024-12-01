@@ -4,7 +4,7 @@
 
 1. [Entrega 1](https://raw.githubusercontent.com/Equipo-2-Pruebas-de-Software/Moda-Virtual-Neon-Threads/refs/heads/main/Presentacion_Neon-Threads.mp4)
 2. [Entrega 2](https://drive.google.com/file/d/1BSTgOUXwF-VgWTKtGSBEefn4VNNKP0Ql/view?usp=sharing)
-3. [Entrega 3]()
+3. [Entrega 3](https://youtu.be/V0VdLL55s9c)
 
 ## Estructura del Proyecto
 
