@@ -1,4 +1,4 @@
-# Entrega 2
+# Entrega 3
 
 ## Alcances de la herramienta
 
@@ -32,3 +32,6 @@ Solución: Conectar el pipeline a una internet con mayor velocidad de bajada.
 
 • Error en la implementación del pipeline de Jenkins con Slack: mensajes sobre el estado del pipeline arrojaban errores y concluían el pipeline.
 Solución: Configurar el plugin de Slack Notification en el sistema de Jenkins, usando una credencial global que enlace Jenkins con el canal de Slack correcto.
+
+• Error en la ejecución de prubeas con Selenium dentro del pipeline de Jenkins: el proceso no encontraba el webdriver requerido por Selenium, por lo que el pipeline era terminado.
+Solución: 
