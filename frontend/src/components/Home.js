@@ -9,7 +9,7 @@ const Home = () => {
       <h2 className="text-center pt-4">Nuestros Productos</h2>
 
       {/* Contenedor para el ProductList */}
-      <div className="product-list-container">
+      <div className="product-list-container" style={{ paddingLeft: '32px', paddingRight: '32px' }}>
         <ProductList filter="all" selectedTallas={[]} limit={4} /> {/* Limitar a 4 productos */}
       </div>
     </div>

@@ -8,29 +8,31 @@ export const UserProvider = ({ children }) => {
   const [userAdmin, setUserAdmin] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // /src/context/UserContext.js
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
-    // Solo intenta parsear si storedUser tiene un valor no nulo
     if (storedUser && token) {
       try {
         const user = JSON.parse(storedUser);
         if (user) {
           setUserName(user.name);
-          setUserAdmin(user.isAdmin || false);
+          setUserAdmin(user.isAdmin || false); // Asegurarse de que isAdmin se obtiene del almacenamiento
           setIsAuthenticated(true);
         }
       } catch (error) {
         console.error('Error al parsear el usuario:', error);
-        localStorage.removeItem('user');  // Limpia localStorage en caso de error
+        localStorage.removeItem('user');
       }
     }
   }, []);
 
+
   const updateUser = (user) => {
     setUserName(user.name);
-    setUserAdmin(user.isAdmin);
+    setUserAdmin(user.isAdmin); // Asegurarse de que se almacena isAdmin
     setIsAuthenticated(true);
     localStorage.setItem('user', JSON.stringify(user));
   };
