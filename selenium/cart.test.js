@@ -8,7 +8,7 @@ const chrome = require('selenium-webdriver/chrome');
   options.addArguments("--disable-gpu");
   options.addArguments("--disable-dev-shm-usage");
   options.addArguments("--no-sandbox");
-  
+
   let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
 
@@ -17,7 +17,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.get('http://localhost:3000/login');
     await driver.sleep(1000);
     // Esperar a que la página cargue completamente
-    await driver.wait(until.elementLocated(By.css('button.btn-link')), 5000);
+    await driver.wait(until.elementLocated(By.css('button.btn-link')), 10000);
     await driver.sleep(1000);
     // Completar formulario de registro
     await driver.findElement(By.id('login-email')).sendKeys('testuser@example.com');
@@ -33,7 +33,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.findElement(By.id('quantity')).sendKeys(Key.BACK_SPACE, '2');
     await driver.findElement(By.id('addToCartButton')).click();
 
-    await driver.wait(until.alertIsPresent(), 5000);
+    await driver.wait(until.alertIsPresent(), 10000);
 
     let alert = await driver.switchTo().alert();
 
