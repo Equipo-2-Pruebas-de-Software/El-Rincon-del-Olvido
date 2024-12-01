@@ -44,4 +44,4 @@ Solución: Conectar el pipeline a una internet con mayor velocidad de bajada.
 Solución: Configurar el plugin de Slack Notification en el sistema de Jenkins, usando una credencial global que enlace Jenkins con el canal de Slack correcto.
 
 • Error en la ejecución de prubeas con Selenium dentro del pipeline de Jenkins: el proceso no encontraba el webdriver requerido por Selenium, por lo que el pipeline era terminado.
-Solución: 
+Solución: Inicializar y configurar Chrome en stages tempranos del pipeline, destacando el argumentos --no-sandbox, el cuál cambia drásticamente la ejecución de Selenium en el pipeline.
