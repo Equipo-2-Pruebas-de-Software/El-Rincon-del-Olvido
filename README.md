@@ -13,6 +13,7 @@ El proyecto se organiza en tres carpetas principales:
 - **backend**: Contiene el servidor y la lógica de la API.
 - **frontend**: Contiene la aplicación React.
 - **testing**: Contiene las pruebas automatizadas con Cypress.
+- **selenium**: Contiene las pruebas automatizadas de Selenium
 
 ## Instalación y Uso
 
