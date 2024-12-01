@@ -4,7 +4,11 @@ const chrome = require('selenium-webdriver/chrome');
 (async function addToCartTest() {
   let options = new chrome.Options();
   options.addArguments('--headless');
-
+  options.addArguments("--disable-extensions");
+  options.addArguments("--disable-gpu");
+  options.addArguments("--disable-dev-shm-usage");
+  options.addArguments("--no-sandbox");
+  
   let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
 
